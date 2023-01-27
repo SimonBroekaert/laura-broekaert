@@ -18,6 +18,10 @@ return new class () extends Migration {
                 ->nullable();
             $table->boolean('is_online')
                 ->default(false);
+            $table->string('seo_title')
+                ->nullable();
+            $table->string('seo_description')
+                ->nullable();
             $table->timestamps();
         });
     }

@@ -27,6 +27,8 @@ class Page extends Model implements HasMedia
         'slug',
         'body',
         'is_online',
+        "seo_title",
+        "seo_description",
     ];
 
     /**
@@ -73,5 +75,17 @@ class Page extends Model implements HasMedia
         return $this->resolveRouteBindingQuery($this, $value, $field)
             ->where('is_online', true)
             ->first();
+    }
+
+    /**
+     * Media: collections.
+     *
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('seo_image')
+            ->useDisk('public')
+            ->singleFile();
     }
 }

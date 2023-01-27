@@ -9,15 +9,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "ebess/advanced-nova-media-library": "^4.0",
         "guzzlehttp/guzzle": "^7.2",
         "kabbouchi/nova-logs-tool": "^2.1",
         "laravel/framework": "^9.19",
         "laravel/nova": "~4.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-sluggable": "^3.4",
         "stechstudio/laravel-php-cs-fixer": "^3.0",
-        "visanduma/nova-back-navigation": "^1.0"
+        "visanduma/nova-back-navigation": "^1.0",
+        "whitecube/nova-flexible-content": "^1.0",
+        "simonbroekaert/link-picker": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -55,8 +59,7 @@
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
-            "@php artisan nova:publish",
-            "@php artisan custom-nova:publish-localizations"
+            "@php artisan nova:publish"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -84,6 +87,10 @@
         {
             "type": "composer",
             "url": "https://nova.laravel.com"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/LinkPicker"
         }
     ]
 }

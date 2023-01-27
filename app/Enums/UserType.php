@@ -14,8 +14,8 @@ enum UserType: string
     public function label(): string
     {
         return match ($this) {
-            self::TYPE_ADMIN => __('user.type.admin'),
-            self::TYPE_DEVELOPER => __('user.type.developer'),
+            self::TYPE_ADMIN => 'Admin',
+            self::TYPE_DEVELOPER => 'Developer',
         };
     }
 }

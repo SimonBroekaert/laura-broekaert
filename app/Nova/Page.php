@@ -2,28 +2,35 @@
 
 namespace App\Nova;
 
-use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\Gravatar;
+use App\Enums\PredefinedPage;
+use App\Nova\Flexible\Presets\DefaultPreset;
+use App\Nova\Flexible\Presets\HomePreset;
+use App\Nova\Traits\HasDeveloperFields;
+use App\Nova\Traits\HasTimestamps;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Whitecube\NovaFlexibleContent\Flexible;
 
-class User extends Resource
+class Page extends Resource
 {
+    use HasDeveloperFields;
+    use HasTimestamps;
+
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\User>
+     * @var class-string<\App\Models\Page>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Page::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -31,7 +38,9 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'title',
+        'developer_id',
     ];
 
     /**
@@ -43,24 +52,30 @@ class User extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
+            ID::make()
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->onlyOnDetail(),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            Text::make('Title', 'title')
+                ->rules('required', 'max:255', 'unique:pages,title,{{resourceId}}')
+                ->sortable(),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
+            Text::make('Slug', 'slug')
+                ->rules('required', 'max:255', 'unique:pages,slug,{{resourceId}}')
+                ->onlyOnDetail(),
+
+            Flexible::make('Body', 'body')
+                ->preset(match ($this->developer_id) {
+                    PredefinedPage::PAGE_HOME->value => HomePreset::class,
+                    default => DefaultPreset::class,
+                }),
+
+            Boolean::make('Online', 'is_online')
+                ->default(true)
+                ->sortable(),
+
+            ...$this->timestamps(),
+            ...$this->developerFields(),
         ];
     }
 

@@ -104,7 +104,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             return $this->displayUsing(function ($value) {
                 $date = $value->isoFormat('dddd, LL');
                 $time = $value->isoFormat('LT');
-                $glue = __('nova.datetime.at');
+                $glue = 'at';
 
                 return "{$date} {$glue} {$time}";
             });

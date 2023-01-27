@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "build-link-picker": "cd nova-components/LinkPicker && npm run dev",
+        "build-link-picker-prod": "cd nova-components/LinkPicker && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",
@@ -10,7 +12,12 @@
         "laravel-vite-plugin": "^0.7.2",
         "lodash": "^4.17.19",
         "postcss": "^8.4.21",
+        "tailwind-bootstrap-grid": "^5.0.1",
         "tailwindcss": "^3.2.4",
         "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "rfs": "^9.0.6",
+        "tailwindcss-rfs": "^4.0.0"
     }
 }

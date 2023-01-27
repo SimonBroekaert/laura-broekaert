@@ -4664,7 +4664,7 @@
             "dist": {
                 "type": "path",
                 "url": "./nova-components/LinkPicker",
-                "reference": "e0c089bc994c4e4c0d55973e9814ca791df296c3"
+                "reference": "070f94c71606282e4d8152cd89a45b572d606e07"
             },
             "require": {
                 "php": "^7.3|^8.0"

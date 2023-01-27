@@ -9,6 +9,10 @@ trait HasDeveloperFields
 {
     public function developerFields(): array
     {
+        if (!auth()->user()->is_developer) {
+            return [];
+        }
+
         return [
             Heading::make('Developer Fields')
                 ->hideFromIndex(),

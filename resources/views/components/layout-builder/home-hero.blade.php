@@ -31,24 +31,24 @@
 			<div class="mt-40 col-12 md:col-6 md:mt-0">
 				<div class="row">
 					<div class="order-1 col-6 sm:col-4 md:col-6 xl:col-4">
-						<div class="mb-20 transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray">
+						<div class="mb-20 transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray overflow-hidden">
 							<img src="{{ $block->getMedia('images')->first()->getUrl() }}" class="object-cover aspect-3/4 md:aspect-9/16" />
 						</div>
-						<div class="transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray">
+						<div class="transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray overflow-hidden">
 							<img src="{{ $block->getMedia('images')->skip(1)->first()->getUrl() }}" class="object-cover aspect-16/9" />
 						</div>
 					</div>
 					<div
 						class="order-3 hidden sm:block md:hidden xl:block col-12 sm:col-4 md:col-6 xl:col-4 sm:order-2 md:order-3 xl:order-2 mt-90">
-						<div class="transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray">
+						<div class="transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray overflow-hidden">
 							<img src="{{ $block->getMedia('images')->skip(2)->first()->getUrl() }}" class="object-cover aspect-9/16" />
 						</div>
 					</div>
 					<div class="order-2 mt-40 col-6 sm:col-4 md:col-6 xl:col-4 sm:order-3 md:order-2 xl:order-3">
-						<div class="mb-20 transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray">
+						<div class="mb-20 transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray overflow-hidden">
 							<img src="{{ $block->getMedia('images')->skip(3)->first()->getUrl() }}" class="object-cover aspect-16/9" />
 						</div>
-						<div class="transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray">
+						<div class="transition-all rounded shadow select-none betterhover:hover:shadow-lg bg-gray overflow-hidden">
 							<img src="{{ $block->getMedia('images')->skip(4)->first()->getUrl() }}"
 								class="object-cover aspect-3/4 md:aspect-9/16" />
 						</div>

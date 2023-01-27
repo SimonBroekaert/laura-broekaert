@@ -10,7 +10,6 @@ use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
-use Visanduma\NovaBackNavigation\NovaBackNavigation;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -73,7 +72,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            new NovaBackNavigation(),
             (new LogsTool())
                 ->canSee(function ($request) {
                     return $request->user()->is_developer;
@@ -120,11 +118,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         });
 
         Field::macro('autofillFrom', function ($field) {
-            if (! NovaRequest::createFrom(request())->viaRelationship()) {
+            if (!NovaRequest::createFrom(request())->viaRelationship()) {
                 return $this;
             }
 
-            if (! NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
+            if (!NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
                 return $this;
             }
 

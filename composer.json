@@ -19,7 +19,6 @@
         "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-sluggable": "^3.4",
         "stechstudio/laravel-php-cs-fixer": "^3.0",
-        "visanduma/nova-back-navigation": "^1.0",
         "whitecube/nova-flexible-content": "^1.0",
         "simonbroekaert/link-picker": "dev-master"
     },

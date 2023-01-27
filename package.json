@@ -3,8 +3,9 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "build-link-picker": "cd nova-components/LinkPicker && npm run dev",
-        "build-link-picker-prod": "cd nova-components/LinkPicker && npm run prod"
+        "dev-link-picker": "cd nova-components/LinkPicker && npm run dev",
+        "watch-link-picker": "cd nova-components/LinkPicker && npm run watch",
+        "build-link-picker": "cd nova-components/LinkPicker && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",

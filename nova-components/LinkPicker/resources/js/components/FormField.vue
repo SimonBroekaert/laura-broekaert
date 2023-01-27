@@ -46,7 +46,9 @@
           v-for="parameter in routeParameters"
           :key="parameter.name"
         >
-          <p class="block mr-3 leading-tight">{{ parameter.label }}</p>
+          <p class="block mr-3 leading-tight whitespace-nowrap">
+            {{ parameter.label }}<span v-if="parameter.isRequired">*</span>
+          </p>
           <input
             type="text"
             class="w-full form-control form-input form-input-bordered"

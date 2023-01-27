@@ -47,10 +47,11 @@ class LinkPicker
             };
         }
 
-        return route(
-            $route,
-            $parameters,
-        );
+        try {
+            return route($route, $parameters);
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**

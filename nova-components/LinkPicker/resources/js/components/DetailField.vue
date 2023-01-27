@@ -9,6 +9,7 @@
       >
         {{ field.link }}
       </a>
+      <span v-else class="font-bold text-red-500"> Invalid link </span>
     </template>
   </PanelItem>
 </template>

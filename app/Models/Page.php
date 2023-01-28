@@ -77,7 +77,7 @@ class Page extends Model implements HasMedia
     {
         return $this->resolveRouteBindingQuery($this, $value, $field)
             ->where('is_online', true)
-            ->whereNotIn('developer_id', PredefinedPage::cases())
+            ->notPredefined()
             ->first();
     }
 
@@ -100,7 +100,21 @@ class Page extends Model implements HasMedia
      */
     public function scopeLinkPicker($query): Builder
     {
-        return $query->whereNotIn('developer_id', PredefinedPage::cases());
+        return $query->notPredefined();
+    }
+
+    /**
+     * Scope: notPredefined.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeNotPredefined($query): Builder
+    {
+        return $query
+            ->where(function (Builder $query) {
+                $query->whereNull('developer_id')
+                    ->orWhereNotIn('developer_id', PredefinedPage::values());
+            });
     }
 
     /**

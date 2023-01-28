@@ -123,11 +123,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         });
 
         Field::macro('autofillFrom', function ($field) {
-            if (!NovaRequest::createFrom(request())->viaRelationship()) {
+            if (! NovaRequest::createFrom(request())->viaRelationship()) {
                 return $this;
             }
 
-            if (!NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
+            if (! NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
                 return $this;
             }
 

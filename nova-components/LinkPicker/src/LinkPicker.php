@@ -76,7 +76,6 @@ class LinkPicker
         ];
     }
 
-
     /**
      * Check if the route is external.
      *

@@ -2,10 +2,10 @@
 
 namespace App\Nova\Flexible\Layouts;
 
-use App\Models\Page;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\Text;
+use Simonbroekaert\LinkPicker\Nova\Fields\LinkPicker;
 use Spatie\MediaLibrary\HasMedia;
 use Whitecube\NovaFlexibleContent\Concerns\HasMediaLibrary;
 use Whitecube\NovaFlexibleContent\Layouts\Layout;
@@ -49,20 +49,20 @@ class Hero extends Layout implements HasMedia
             Text::make('Title', 'title')
                 ->rules('required', 'max:300'),
 
-            Select::make('Button 1', 'button_1')
-                ->nullable()
-                ->options(Page::pluck('title', 'id'))
-                ->displayUsingLabels(),
+            Heading::make('Button 1'),
 
-            Text::make('Button 1 Text', 'button_1_text')
+            LinkPicker::make('Link', 'button_1')
                 ->nullable(),
 
-            Select::make('Button 2', 'button_2')
-                ->nullable()
-                ->options(Page::pluck('title', 'id'))
-                ->displayUsingLabels(),
+            Text::make('Text', 'button_1_text')
+                ->nullable(),
 
-            Text::make('Button 2 Text', 'button_2_text')
+            Heading::make('Button 2'),
+
+            LinkPicker::make('Link', 'button_2')
+                ->nullable(),
+
+            Text::make('Text', 'button_2_text')
                 ->nullable(),
         ];
     }

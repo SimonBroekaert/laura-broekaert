@@ -9,7 +9,7 @@ trait HasDeveloperFields
 {
     public function developerFields(): array
     {
-        if (!auth()->user()->is_developer) {
+        if (! auth()->user()->is_developer) {
             return [];
         }
 

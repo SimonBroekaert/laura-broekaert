@@ -77,7 +77,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-            (new LogsTool())
+                (new LogsTool())
                 ->canSee(function ($request) {
                     return $request->user()->is_developer;
                 }),
@@ -97,20 +97,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         Field::macro('dateFormat', function () {
             /** @var \Laravel\Nova\Fields\Field $this */
-            return $this->displayUsing(function ($value) {
-                return $value->isoFormat('dddd, LL');
-            });
+            return $this->displayUsing(
+                function ($value) {
+                    return $value->isoFormat('dddd, LL');
+                }
+            );
         });
 
         Field::macro('datetimeFormat', function () {
             /** @var \Laravel\Nova\Fields\Field $this */
-            return $this->displayUsing(function ($value) {
-                $date = $value->isoFormat('dddd, LL');
-                $time = $value->isoFormat('LT');
-                $glue = 'at';
+            return $this->displayUsing(
+                function ($value) {
+                    $date = $value->isoFormat('dddd, LL');
+                    $time = $value->isoFormat('LT');
+                    $glue = 'at';
 
-                return "{$date} {$glue} {$time}";
-            });
+                    return "{$date} {$glue} {$time}";
+                }
+            );
         });
 
         Field::macro('hideFromRelationshipIndex', function () {
@@ -127,13 +131,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $this;
             }
 
-            if (!NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
+            if (! NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
                 return $this;
             }
-
-            $array = [
-                'test'
-            ];
 
             $fieldStack = explode('.', $field);
             $relation = array_shift($fieldStack);

@@ -127,9 +127,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $this;
             }
 
-            if (! NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
+            if (!NovaRequest::createFrom(request())->isCreateOrAttachRequest()) {
                 return $this;
             }
+
+            $array = [
+                'test'
+            ];
 
             $fieldStack = explode('.', $field);
             $relation = array_shift($fieldStack);

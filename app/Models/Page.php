@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Casts\FlexibleCast;
+use App\Enums\PredefinedPage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -74,6 +77,7 @@ class Page extends Model implements HasMedia
     {
         return $this->resolveRouteBindingQuery($this, $value, $field)
             ->where('is_online', true)
+            ->whereNotIn('developer_id', PredefinedPage::cases())
             ->first();
     }
 
@@ -87,5 +91,31 @@ class Page extends Model implements HasMedia
         $this->addMediaCollection('seo_image')
             ->useDisk('public')
             ->singleFile();
+    }
+
+    /**
+     * Scope: linkPicker.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeLinkPicker($query): Builder
+    {
+        return $query->whereNotIn('developer_id', PredefinedPage::cases());
+    }
+
+    /**
+     * Attribute: seo
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function seo(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => (object) [
+                'title' => $this->seo_title,
+                'description' => $this->seo_description,
+                'image' => $this->getFirstMediaUrl('seo_image'),
+            ],
+        );
     }
 }

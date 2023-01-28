@@ -8,6 +8,7 @@ use App\Nova\Flexible\Presets\HomePreset;
 use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestamps;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -46,6 +47,17 @@ class Page extends Resource
     ];
 
     /**
+     * Determine if the current user can delete the given resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToDelete(Request $request)
+    {
+        return in_array($this->developer_id, PredefinedPage::cases());
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -78,12 +90,15 @@ class Page extends Resource
 
             Panel::make('SEO', [
                 Text::make('Title', 'seo_title')
-                    ->rules('max:100'),
+                    ->rules('max:100')
+                    ->hideFromIndex(),
 
                 Text::make('Description', 'seo_description')
-                    ->rules('max:300'),
+                    ->rules('max:300')
+                    ->hideFromIndex(),
 
                 Images::make('Image', 'seo_image')
+                    ->hideFromIndex()
                     ->hideFromIndex(),
             ]),
 

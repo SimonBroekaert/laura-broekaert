@@ -6,6 +6,7 @@ use App\Nova\Dashboards\Main;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use KABBOUCHI\LogsTool\LogsTool;
+use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
@@ -23,6 +24,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         Nova::withBreadcrumbs();
+
+        Nova::serving(function (ServingNova $event) {
+            app()->setLocale('en');
+        });
     }
 
     /**

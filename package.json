@@ -5,7 +5,9 @@
         "build": "vite build",
         "dev-link-picker": "cd nova-components/LinkPicker && npm run dev",
         "watch-link-picker": "cd nova-components/LinkPicker && npm run watch",
-        "build-link-picker": "cd nova-components/LinkPicker && npm run prod"
+        "build-link-picker": "cd nova-components/LinkPicker && npm run prod",
+        "build-youtube": "cd nova-components/Youtube && npm run dev",
+        "build-youtube-prod": "cd nova-components/Youtube && npm run prod"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.13",

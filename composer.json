@@ -16,11 +16,13 @@
         "laravel/nova": "~4.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "manogi/nova-tiptap": "^3.2",
+        "simonbroekaert/link-picker": "dev-master",
+        "simonbroekaert/youtube": "dev-master",
         "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-sluggable": "^3.4",
         "stechstudio/laravel-php-cs-fixer": "^3.0",
-        "whitecube/nova-flexible-content": "^1.0",
-        "simonbroekaert/link-picker": "dev-master"
+        "whitecube/nova-flexible-content": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -90,6 +92,10 @@
         {
             "type": "path",
             "url": "./nova-components/LinkPicker"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/Youtube"
         }
     ]
 }

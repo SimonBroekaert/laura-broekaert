@@ -2,7 +2,13 @@
 
 namespace App\Nova\Flexible\Presets;
 
+use App\Nova\Flexible\Layouts\Article;
+use App\Nova\Flexible\Layouts\ArticleWithMedia;
+use App\Nova\Flexible\Layouts\Highlight;
 use App\Nova\Flexible\Layouts\HomeHero;
+use App\Nova\Flexible\Layouts\Images;
+use App\Nova\Flexible\Layouts\Quote;
+use App\Nova\Flexible\Layouts\Video;
 use Whitecube\NovaFlexibleContent\Flexible;
 use Whitecube\NovaFlexibleContent\Layouts\Preset;
 
@@ -16,5 +22,11 @@ class HomePreset extends Preset
     public function handle(Flexible $field)
     {
         $field->addLayout(HomeHero::class);
+        $field->addLayout(Article::class);
+        $field->addLayout(ArticleWithMedia::class);
+        $field->addLayout(Images::class);
+        $field->addLayout(Video::class);
+        $field->addLayout(Highlight::class);
+        $field->addLayout(Quote::class);
     }
 }

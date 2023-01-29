@@ -1,1 +1,2 @@
-import './bootstrap';
+import './_bootstrap';
+import './_carousel';

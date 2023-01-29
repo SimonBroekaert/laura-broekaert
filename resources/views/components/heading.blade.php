@@ -10,7 +10,7 @@
 	    default => 'text-base',
 	};
 	$attributes = $attributes->merge([
-	    'class' => "{$fontSizeClass} text-gray-dark font-bold",
+	    'class' => "{$fontSizeClass} font-bold",
 	]);
 @endphp
 

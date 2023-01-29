@@ -40,7 +40,7 @@ class LinkPicker
 
         if (Str::startsWith($route, 'external.')) {
             return match ($route) {
-                'external.url' => $parameters['url'],
+                'external.link' => $parameters['url'],
                 'external.mailto' => "mailto:{$parameters['email']}",
                 'external.tel' => "tel:{$parameters['phone']}",
                 default => null,

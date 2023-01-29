@@ -16,6 +16,11 @@ class HomeHero extends Layout implements HasMedia
     use HasMediaLibrary;
 
     /**
+     * The media collection name
+     */
+    protected const MEDIA_COLLECTION = 'home_hero_images';
+
+    /**
      * The maximum amount of this layout type that can be added
      */
     protected $limit = 1;
@@ -42,9 +47,16 @@ class HomeHero extends Layout implements HasMedia
     public function fields()
     {
         return [
-            Images::make('Images (Upload 5)', 'images')
+            Images::make('Images (Upload 5)', self::MEDIA_COLLECTION)
                 ->required()
                 ->rules('required', 'size:5')
+                ->conversionOnIndexView('thumb')
+                ->conversionOnDetailView('thumb')
+                ->conversionOnForm('thumb')
+                ->conversionOnPreview('thumb')
+                ->customPropertiesFields([
+                    Text::make('Alt description', 'alt'),
+                ])
                 ->enableExistingMedia(),
 
             Text::make('Title', 'title')
@@ -68,6 +80,11 @@ class HomeHero extends Layout implements HasMedia
         ];
     }
 
+    /**
+     * Attribute: first_button
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
     protected function firstButton(): Attribute
     {
         return Attribute::make(
@@ -75,6 +92,11 @@ class HomeHero extends Layout implements HasMedia
         );
     }
 
+    /**
+     * Attribute: second_button
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
     protected function secondButton(): Attribute
     {
         return Attribute::make(
@@ -83,13 +105,14 @@ class HomeHero extends Layout implements HasMedia
     }
 
     /**
-     * Media: collections.
+     * Attribute: images
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function registerMediaCollections(): void
+    protected function images(): Attribute
     {
-        $this->addMediaCollection('images')
-            ->useDisk('public');
+        return Attribute::make(
+            get: fn () => $this->getMedia(self::MEDIA_COLLECTION),
+        );
     }
 }

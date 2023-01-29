@@ -42,7 +42,7 @@ module.exports = {
         dark: "#FF3303",
       },
       white: "#f8fafc",
-      black: "#0f172a",
+      black: "#393939",
       gray: {
         light: "#f1f5f9",
         DEFAULT: "#d4d4d4",
@@ -84,8 +84,8 @@ module.exports = {
       base: "1rem",
       lg: "1.125rem",
       h4: "1.25rem",
-      h3: "1.5rem",
-      h2: "1.875rem",
+      h3: "1.6rem",
+      h2: "2.1rem",
       h1: "2.4rem",
     },
     aspectRatio: {

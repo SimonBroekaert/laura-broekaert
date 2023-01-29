@@ -47,7 +47,10 @@
           :key="parameter.name"
         >
           <p class="block mr-3 leading-tight whitespace-nowrap">
-            {{ parameter.label }}<span v-if="parameter.isRequired">*</span>
+            {{ parameter.label }}
+            <span class="text-sm text-red-500" v-if="parameter.isRequired"
+              >*</span
+            >
           </p>
           <input
             type="text"

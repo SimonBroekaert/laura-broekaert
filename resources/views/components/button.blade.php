@@ -7,11 +7,11 @@
 	}
 	$themeClasses = match ($theme) {
 	    'primary' => 'after:border-primary betterhover:hover:after:border-primary-dark',
-	    'black' => 'after:border-black betterhover:hover:after:border-gray-dark',
+	    'secondary' => 'after:border-gray-dark betterhover:hover:after:border-black',
 	};
 	$themeClassesSpan = match ($theme) {
 	    'primary' => 'text-black bg-primary betterhover:group-hover/button:bg-primary-dark',
-	    'black' => 'text-white bg-black betterhover:group-hover/button:bg-gray-dark',
+	    'secondary' => 'text-white bg-gray-dark betterhover:group-hover/button:bg-black',
 	};
 	$attributes = $attributes->merge([
 	    'class' => "{$themeClasses} relative block transition-all cursor-pointer select-none group/button after:-z-10 after:absolute after:top-10 after:left-10 after:border after:border-2 after:rounded after:w-full after:h-full",

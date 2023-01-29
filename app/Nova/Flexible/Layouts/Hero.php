@@ -3,9 +3,8 @@
 namespace App\Nova\Flexible\Layouts;
 
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Laravel\Nova\Fields\Heading;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Nova\Fields\Text;
-use Simonbroekaert\LinkPicker\Nova\Fields\LinkPicker;
 use Spatie\MediaLibrary\HasMedia;
 use Whitecube\NovaFlexibleContent\Concerns\HasMediaLibrary;
 use Whitecube\NovaFlexibleContent\Layouts\Layout;
@@ -13,6 +12,8 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
 class Hero extends Layout implements HasMedia
 {
     use HasMediaLibrary;
+
+    protected const MEDIA_COLLECTION = 'hero_image';
 
     /**
      * The maximum amount of this layout type that can be added
@@ -41,41 +42,32 @@ class Hero extends Layout implements HasMedia
     public function fields()
     {
         return [
-            Images::make('Image', 'image')
+            Images::make('Image', self::MEDIA_COLLECTION)
                 ->required()
                 ->rules('required')
+                ->conversionOnIndexView('thumb')
+                ->conversionOnDetailView('thumb')
+                ->conversionOnForm('thumb')
+                ->conversionOnPreview('thumb')
+                ->customPropertiesFields([
+                    Text::make('Alt description', 'alt'),
+                ])
                 ->enableExistingMedia(),
 
             Text::make('Title', 'title')
                 ->rules('required', 'max:300'),
-
-            Heading::make('Button 1'),
-
-            LinkPicker::make('Link', 'button_1')
-                ->nullable(),
-
-            Text::make('Text', 'button_1_text')
-                ->nullable(),
-
-            Heading::make('Button 2'),
-
-            LinkPicker::make('Link', 'button_2')
-                ->nullable(),
-
-            Text::make('Text', 'button_2_text')
-                ->nullable(),
         ];
     }
 
     /**
-     * Media: collections.
+     * Attribute: image
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function registerMediaCollections(): void
+    protected function image(): Attribute
     {
-        $this->addMediaCollection('image')
-            ->useDisk('public')
-            ->singleFile();
+        return Attribute::make(
+            get: fn () => $this->getFirstMedia(self::MEDIA_COLLECTION),
+        );
     }
 }

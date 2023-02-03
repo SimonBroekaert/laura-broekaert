@@ -79,7 +79,7 @@ class Page extends Model implements HasMedia
     public function resolveRouteBinding($value, $field = null)
     {
         return $this->resolveRouteBindingQuery($this, $value, $field)
-            ->where('is_online', true)
+            ->online()
             ->notPredefined()
             ->first();
     }
@@ -230,7 +230,29 @@ class Page extends Model implements HasMedia
     }
 
     /**
-     * Attribute: seo
+     * Scope: online.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeOnline($query): Builder
+    {
+        return $query->where('is_online', true);
+    }
+
+    /**
+     * Attribute: url.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function url(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('pages.show', $this),
+        );
+    }
+
+    /**
+     * Attribute: seo.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */

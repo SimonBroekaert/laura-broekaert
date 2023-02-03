@@ -11,7 +11,7 @@
 	<div class="container">
 		<div class="justify-center row">
 			<div class="col-12 lg:col-10 xl:col-8">
-				<article class="rounded lg:p-100 md:p-65 p-50 bg-black/80">
+				<article class="rounded lg:p-100 md:p-65 p-50 bg-black/80" data-aos="fade-up">
 					<x-heading :level="2" :style-level="3" class="text-primary">
 						{{ $block->quote }}
 					</x-heading>

@@ -1,0 +1,11 @@
+.body {
+    @apply overflow-x-hidden;
+}
+
+.body[data-menu-state="opened"] {
+    @apply overflow-hidden;
+    @apply h-screen;
+
+    @apply lg:overflow-y-auto;
+    @apply lg:h-auto;
+}

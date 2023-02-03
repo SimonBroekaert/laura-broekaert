@@ -1,0 +1,75 @@
+@layer components {
+    .tiptap h1,
+    .tiptap h2,
+    .tiptap h3,
+    .tiptap h4,
+    .tiptap h5,
+    .tiptap h6 {
+        @apply rfs:text-h3;
+        @apply text-gray-dark;
+        @apply font-bold;
+        @apply mb-20;
+    }
+
+    .tiptap p {
+        @apply rfs:text-base;
+        @apply text-gray-dark;
+        @apply mb-20;
+        @apply leading-relaxed;
+    }
+
+    .tiptap ul,
+    .tiptap ol {
+        @apply rfs:text-base;
+        @apply text-gray-dark;
+        @apply mb-20;
+        @apply leading-relaxed;
+        @apply list-disc;
+        @apply list-inside;
+    }
+
+    .tiptap li {
+        @apply mb-5;
+        @apply rfs:text-base;
+        @apply text-gray-dark;
+        @apply leading-relaxed;
+    }
+
+    .tiptap li p {
+        @apply inline-block;
+        @apply leading-relaxed;
+    }
+
+    .tiptap a {
+        @apply font-bold;
+        @apply underline;
+        @apply transition-all;
+        @apply leading-relaxed;
+    }
+
+    .tiptap *:last-child {
+        @apply mb-0;
+    }
+
+    .tiptap.tiptap-with-background h1,
+    .tiptap.tiptap-with-background h2,
+    .tiptap.tiptap-with-background h3,
+    .tiptap.tiptap-with-background h4,
+    .tiptap.tiptap-with-background h5,
+    .tiptap.tiptap-with-background h6 {
+        @apply text-white;
+    }
+
+    .tiptap.tiptap-with-background p {
+        @apply text-white;
+    }
+
+    .tiptap.tiptap-with-background ul,
+    .tiptap.tiptap-with-background ol {
+        @apply text-white;
+    }
+
+    .tiptap.tiptap-with-background li {
+        @apply text-white;
+    }
+}

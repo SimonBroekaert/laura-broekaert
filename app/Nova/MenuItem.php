@@ -2,35 +2,47 @@
 
 namespace App\Nova;
 
-use Illuminate\Validation\Rules\Password as RulesPassword;
-use Laravel\Nova\Fields\Gravatar;
+use App\Nova\Traits\HasTimestampFields;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Outl1ne\NovaSortable\Traits\HasSortableRows;
+use Simonbroekaert\LinkPicker\Nova\Fields\LinkPicker;
 
-class User extends Resource
+class MenuItem extends Resource
 {
+    use HasSortableRows;
+    use HasTimestampFields;
+
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\User>
+     * @var class-string<\App\Models\MenuItem>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\MenuItem::class;
+
+    /**
+     * Indicates if the resource should be displayed in the sidebar.
+     *
+     * @var bool
+     */
+    public static $displayInNavigation = false;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Administration';
+    public static $group = 'Site Builder';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'label';
 
     /**
      * The columns that should be searched.
@@ -38,8 +50,19 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'label',
     ];
+
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Items';
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -50,24 +73,30 @@ class User extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
+            ID::make()
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->onlyOnDetail(),
 
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+            BelongsTo::make('Menu', 'menu', Menu::class)
+                ->sortable(),
 
-            Password::make('Password')
-                ->creationRules('required', RulesPassword::defaults())
-                ->updateRules('nullable', RulesPassword::defaults())
-                ->onlyOnForms(),
+            Text::make('Label')
+                ->rules('required', 'max:255')
+                ->sortable(),
+
+            LinkPicker::make('Link')
+                ->rules('required')
+                ->sortable(),
+
+            Boolean::make('Online', 'is_online')
+                ->default(true)
+                ->sortable(),
+
+            Boolean::make('Opens in new tab', 'opens_in_new_tab')
+                ->default(false)
+                ->sortable(),
+
+            ...$this->timestampFields(),
         ];
     }
 

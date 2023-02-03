@@ -9,7 +9,7 @@
 <section {{ $attributes }}>
 	<div class="container">
 		<div class="justify-center row">
-			<div class="col-12 lg:col-10 xl:col-8" data-carousel>
+			<div class="col-12 lg:col-10 xl:col-8" data-carousel data-aos="zoom-out">
 				<div class="relative w-full overflow-hidden aspect-4/3 md:aspect-16/9">
 					@foreach ($block->images as $image)
 						<x-image :image="$image" format="images" data-carousel-item data-toggle-classes="invisible opacity-0"

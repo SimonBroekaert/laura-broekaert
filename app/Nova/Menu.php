@@ -2,28 +2,33 @@
 
 namespace App\Nova;
 
-use Illuminate\Validation\Rules\Password as RulesPassword;
-use Laravel\Nova\Fields\Gravatar;
+use App\Nova\Traits\HasDeveloperFields;
+use App\Nova\Traits\HasTimestampFields;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Menu extends Resource
 {
+    use HasDeveloperFields;
+    use HasTimestampFields;
+
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\User>
+     * @var class-string<\App\Models\Menu>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Menu::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Administration';
+    public static $group = 'Site Builder';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -38,8 +43,43 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name',
+        'developer_id',
     ];
+
+    /**
+     * Determine if the current user can create new resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function authorizedToCreate(Request $request)
+    {
+        return auth()->user()->is_developer;
+    }
+
+    /**
+     * Determine if the current user can update the given resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToUpdate(Request $request)
+    {
+        return auth()->user()->is_developer;
+    }
+
+    /**
+     * Determine if the current user can delete the given resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToDelete(Request $request)
+    {
+        return auth()->user()->is_developer;
+    }
 
     /**
      * Get the fields displayed by the resource.
@@ -50,24 +90,21 @@ class User extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
+            ID::make()
                 ->sortable()
-                ->rules('required', 'max:255'),
+                ->onlyOnDetail(),
 
-            Text::make('Email')
+            Text::make('Name', 'name')
                 ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->rules('required', 'max:255', 'unique:menus,name,{{resourceId}}'),
 
-            Password::make('Password')
-                ->creationRules('required', RulesPassword::defaults())
-                ->updateRules('nullable', RulesPassword::defaults())
-                ->onlyOnForms(),
+            Number::make('# of Items', fn () => $this->items()->count())
+                ->exceptOnForms(),
+
+            HasMany::make('Items', 'items', MenuItem::class),
+
+            ...$this->timestampFields(),
+            ...$this->developerFields(),
         ];
     }
 

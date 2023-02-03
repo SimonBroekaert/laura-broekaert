@@ -1,0 +1,24 @@
+.header-gradient {
+    background: linear-gradient(
+        180deg,
+        theme("colors.white / 90%") 0%,
+        theme("colors.white / 75%") 85%,
+        theme("colors.white / 0%") 100%
+    );
+}
+
+.header-gradient::before {
+    content: "";
+    @apply absolute;
+    @apply top-0;
+    @apply left-0;
+    @apply w-full;
+    @apply h-full;
+    @apply bg-white/0;
+    @apply transition-all;
+    @apply -z-50;
+}
+
+body[data-menu-state="opened"] .header-gradient::before {
+    @apply bg-white;
+}

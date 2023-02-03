@@ -1,0 +1,30 @@
+.menu {
+    @apply flex;
+    @apply absolute;
+    @apply top-full;
+    @apply right-0;
+    @apply bg-white;
+    @apply flex-col;
+    @apply items-center;
+    @apply gap-30;
+    @apply overflow-auto;
+    @apply py-20;
+    @apply translate-x-full;
+    @apply transition-transform;
+
+    width: min(100%, 100vw, 15.625rem);
+    height: calc(100vh - theme("spacing.90"));
+
+    @apply lg:translate-x-0;
+    @apply lg:flex-row;
+    @apply lg:static;
+    @apply lg:bg-transparent;
+    @apply lg:overflow-visible;
+    @apply lg:py-0;
+    @apply lg:w-auto;
+    @apply lg:h-auto;
+}
+
+body[data-menu-state="opened"] .menu {
+    @apply translate-x-0;
+}

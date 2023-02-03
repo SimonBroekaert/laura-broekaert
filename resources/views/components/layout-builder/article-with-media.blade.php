@@ -13,7 +13,7 @@
 			'md:flex-row-reverse' => isEven($block->data_type_index),
 		])>
 			<div class="col-12 md:col-6">
-				<article>
+				<article data-aos="fade-up">
 					@if ($block->title)
 						<x-heading :level="2" class="text-gray-dark mb-30">
 							{{ $block->title }}
@@ -38,11 +38,13 @@
 					@endif
 				</article>
 			</div>
-			<div class="mt-40 col-12 md:col-6 xl:col-5" data-carousel>
+			<div class="mt-40 col-12 md:col-6 xl:col-5" data-carousel
+				data-aos="{{ isEven($block->data_type_index) ? 'fade-left' : 'fade-right' }}">
 				<div class="relative w-full aspect-4/3">
 					@foreach ($block->images as $image)
-						<x-image :image="$image" format="article-with-media" data-carousel-item data-toggle-classes="invisible opacity-0"
-							data-active="{{ $loop->first ? 'true' : 'false' }}" @class([
+						<x-image :image="$image" format="article-with-media" data-carousel-item
+							data-toggle-classes="invisible opacity-0" data-active="{{ $loop->first ? 'true' : 'false' }}"
+							@class([
 								'absolute overflow-hidden transition-all rounded shadow select-none w-full h-full bg-gray',
 								'invisible opacity-0' => !$loop->first,
 							]) />

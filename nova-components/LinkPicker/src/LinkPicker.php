@@ -9,6 +9,27 @@ use Illuminate\Support\Str;
 class LinkPicker
 {
     /**
+     * The route name of the link picker.
+     *
+     * @param array|string|null $data
+     *
+     * @return string|null
+     */
+    public function routeName(array|string|null $data): ?string
+    {
+        if ($data === null) {
+            return null;
+        }
+
+        // Make sure the data is an array
+        if (! is_array($data)) {
+            $data = json_decode($data, true);
+        }
+
+        return $data['route'] ?? null;
+    }
+
+    /**
      * Build a route from the given data.
      *
      * @param array|string|null $data

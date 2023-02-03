@@ -1,0 +1,21 @@
+.custom-scrollbar {
+    scrollbar-width: auto;
+    scrollbar-color: theme("colors.primary.DEFAULT") theme("colors.white");
+}
+
+.body[data-menu-state="opened"].custom-scrollbar {
+    padding-right: theme("spacing.10");
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: theme("spacing.10");
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: theme("colors.white");
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary;
+    @apply cursor-pointer;
+}

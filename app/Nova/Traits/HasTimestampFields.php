@@ -5,9 +5,9 @@ namespace App\Nova\Traits;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Heading;
 
-trait HasTimestamps
+trait HasTimestampFields
 {
-    public function timestamps(): array
+    public function timestampFields(): array
     {
         return [
             Heading::make('Timestamps')

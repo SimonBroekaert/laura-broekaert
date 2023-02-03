@@ -10,7 +10,7 @@
 	<div class="container">
 		<div class="justify-center row">
 			<div class="col-12 lg:col-10 xl:col-8">
-				<article>
+				<article data-aos="fade-up">
 					@if ($block->title)
 						<x-heading :level="2" class="text-gray-dark mb-30">
 							{{ $block->title }}

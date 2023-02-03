@@ -41,10 +41,16 @@
 	@vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body {{ $attributes->merge([
-    'class' => 'bg-gray-light',
-]) }}>
-	{{ $slot }}
+<body
+	{{ $attributes->merge([
+	    'class' => 'bg-gray-light body group/body custom-scrollbar',
+	    'data-menu-state' => 'closed',
+	]) }}>
+	<x-layout.header />
+	<main class="pt-90">
+		{{ $slot }}
+	</main>
+	<x-layout.footer />
 </body>
 
 </html>

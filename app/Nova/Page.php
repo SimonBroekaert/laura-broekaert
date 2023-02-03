@@ -6,7 +6,7 @@ use App\Enums\PredefinedPage;
 use App\Nova\Flexible\Presets\DefaultPreset;
 use App\Nova\Flexible\Presets\HomePreset;
 use App\Nova\Traits\HasDeveloperFields;
-use App\Nova\Traits\HasTimestamps;
+use App\Nova\Traits\HasTimestampFields;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
@@ -19,7 +19,7 @@ use Whitecube\NovaFlexibleContent\Flexible;
 class Page extends Resource
 {
     use HasDeveloperFields;
-    use HasTimestamps;
+    use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
@@ -27,6 +27,13 @@ class Page extends Resource
      * @var class-string<\App\Models\Page>
      */
     public static $model = \App\Models\Page::class;
+
+    /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Site Builder';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -102,7 +109,7 @@ class Page extends Resource
                     ->hideFromIndex(),
             ]),
 
-            ...$this->timestamps(),
+            ...$this->timestampFields(),
             ...$this->developerFields(),
         ];
     }

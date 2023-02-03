@@ -33,8 +33,8 @@ class Page extends Model implements HasMedia
         'slug',
         'body',
         'is_online',
-        "seo_title",
-        "seo_description",
+        'seo_title',
+        'seo_description',
     ];
 
     /**
@@ -74,6 +74,7 @@ class Page extends Model implements HasMedia
      *
      * @param  mixed  $value
      * @param  string|null  $field
+     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function resolveRouteBinding($value, $field = null)
@@ -103,106 +104,29 @@ class Page extends Model implements HasMedia
      *
      * @return void
      */
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         // Add thumb media conversion for all media
         $this->addMediaConversion('thumb')
             ->fit(Manipulations::FIT_CROP, 250, 250);
 
         // Add Conversions for the Layout Builder Home-hero block images
-        if ($media && Str::startsWith($media->collection_name, 'home_hero_images_')) {
-            // Crop the image to a 9:16 ratio and add responsive images
-            $this->addMediaConversion('home-hero-portrait')
-                ->fit(Manipulations::FIT_CROP, 800, 1425)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('home-hero-portrait-webp')
-                ->fit(Manipulations::FIT_CROP, 800, 1425)
-                ->format('webp')
-                ->withResponsiveImages();
-
-            // Crop the image to a 16:9 ratio and add responsive images
-            $this->addMediaConversion('home-hero-landscape')
-                ->fit(Manipulations::FIT_CROP, 1425, 800)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('home-hero-landscape-webp')
-                ->fit(Manipulations::FIT_CROP, 1425, 800)
-                ->format('webp')
-                ->withResponsiveImages();
-        }
+        $this->addHomeHeroBlockConversions($media);
 
         // Add Conversions for the Layout Builder Hero block images
-        if ($media && Str::startsWith($media->collection_name, 'hero_image_')) {
-            // Crop the image to a 9:16 ratio and add responsive images
-            $this->addMediaConversion('hero')
-                ->fit(Manipulations::FIT_CROP, 2560, 720)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('hero-webp')
-                ->fit(Manipulations::FIT_CROP, 2560, 720)
-                ->format('webp')
-                ->withResponsiveImages();
-        }
+        $this->addHeroBlockConversions($media);
 
         // Add Conversions for the Layout Builder Article with media block images
-        if ($media && Str::startsWith($media->collection_name, 'article_with_media_images_')) {
-            // Crop the image to a 9:16 ratio and add responsive images
-            $this->addMediaConversion('article-with-media')
-                ->fit(Manipulations::FIT_CROP, 1240, 930)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('article-with-media-webp')
-            ->fit(Manipulations::FIT_CROP, 1240, 930)
-                ->format('webp')
-                ->withResponsiveImages();
-        }
+        $this->addArticleWithMediaBlockConversions($media);
 
         // Add Conversions for the Layout Builder Image block images
-        if ($media && Str::startsWith($media->collection_name, 'images_')) {
-            // Crop the image to a 9:16 ratio and add responsive images
-            $this->addMediaConversion('images')
-            ->fit(Manipulations::FIT_CROP, 2560, 1440)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('images-webp')
-            ->fit(Manipulations::FIT_CROP, 2560, 1440)
-                ->format('webp')
-                ->withResponsiveImages();
-        }
+        $this->addImageBlockConversions($media);
 
         // Add Conversions for the Layout Builder Highlight block images
-        if ($media && Str::startsWith($media->collection_name, 'highlight_image_')) {
-            // Crop the image to a 9:16 ratio and add responsive images
-            $this->addMediaConversion('highlight')
-            ->fit(Manipulations::FIT_CROP, 2560, 1440)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('highlight-webp')
-            ->fit(Manipulations::FIT_CROP, 2560, 1440)
-                ->format('webp')
-                ->withResponsiveImages();
-        }
+        $this->addHighlightBlockConversions($media);
 
         // Add Conversions for the Layout Builder Quote block images
-        if ($media && Str::startsWith($media->collection_name, 'quote_image_')) {
-            // Crop the image to a 9:16 ratio and add responsive images
-            $this->addMediaConversion('quote')
-            ->fit(Manipulations::FIT_CROP, 2560, 1440)
-                ->withResponsiveImages();
-
-            // Add a webp variant
-            $this->addMediaConversion('quote-webp')
-            ->fit(Manipulations::FIT_CROP, 2560, 1440)
-                ->format('webp')
-                ->withResponsiveImages();
-        }
+        $this->addQuoteBlockConversions($media);
     }
 
     /**
@@ -265,5 +189,166 @@ class Page extends Model implements HasMedia
                 'image' => $this->getFirstMediaUrl('seo_image'),
             ],
         );
+    }
+
+    /**
+     * Method: addHomeHeroBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addHomeHeroBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'home_hero_images_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('home-hero-portrait')
+            ->fit(Manipulations::FIT_CROP, 800, 1425)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('home-hero-portrait-webp')
+            ->fit(Manipulations::FIT_CROP, 800, 1425)
+            ->format('webp')
+            ->withResponsiveImages();
+
+        // Crop the image to a 16:9 ratio and add responsive images
+        $this->addMediaConversion('home-hero-landscape')
+            ->fit(Manipulations::FIT_CROP, 1425, 800)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('home-hero-landscape-webp')
+            ->fit(Manipulations::FIT_CROP, 1425, 800)
+            ->format('webp')
+            ->withResponsiveImages();
+    }
+
+    /**
+     * Method: addHeroBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addHeroBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'hero_image_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('hero')
+            ->fit(Manipulations::FIT_CROP, 2560, 720)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('hero-webp')
+            ->fit(Manipulations::FIT_CROP, 2560, 720)
+            ->format('webp')
+            ->withResponsiveImages();
+    }
+
+    /**
+     * Method: addHighlightBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addHighlightBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'highlight_image_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('highlight')
+            ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('highlight-webp')
+            ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->format('webp')
+            ->withResponsiveImages();
+    }
+
+    /**
+     * Method: addArticleWithMediaBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addArticleWithMediaBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'article_with_media_images_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('article-with-media')
+            ->fit(Manipulations::FIT_CROP, 1240, 930)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('article-with-media-webp')
+            ->fit(Manipulations::FIT_CROP, 1240, 930)
+            ->format('webp')
+            ->withResponsiveImages();
+    }
+
+    /**
+     * Method: addImageBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addImageBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'images_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('images')
+            ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('images-webp')
+            ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->format('webp')
+            ->withResponsiveImages();
+    }
+
+    /**
+     * Method: addQuoteBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addQuoteBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'quote_image_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('quote')
+            ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('quote-webp')
+            ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->format('webp')
+            ->withResponsiveImages();
     }
 }

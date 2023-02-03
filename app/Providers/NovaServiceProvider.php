@@ -31,45 +31,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     }
 
     /**
-     * Register the Nova routes.
-     *
-     * @return void
-     */
-    protected function routes()
-    {
-        Nova::routes()
-            ->withAuthenticationRoutes()
-            ->withPasswordResetRoutes()
-            ->register();
-    }
-
-    /**
-     * Register the Nova gate.
-     *
-     * This gate determines who can access Nova in non-local environments.
-     *
-     * @return void
-     */
-    protected function gate()
-    {
-        Gate::define('viewNova', function ($user) {
-            return true;
-        });
-    }
-
-    /**
-     * Get the dashboards that should be listed in the Nova sidebar.
-     *
-     * @return array
-     */
-    protected function dashboards()
-    {
-        return [
-            new Main(),
-        ];
-    }
-
-    /**
      * Get the tools that should be listed in the Nova sidebar.
      *
      * @return array
@@ -77,7 +38,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
-                (new LogsTool())
+            (new LogsTool())
                 ->canSee(function ($request) {
                     return $request->user()->is_developer;
                 }),
@@ -171,5 +132,42 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'value' => $value,
             ]);
         });
+    }
+
+    /**
+     * Register the Nova routes.
+     *
+     * @return void
+     */
+    protected function routes()
+    {
+        Nova::routes()
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
+    }
+
+    /**
+     * Register the Nova gate.
+     *
+     * This gate determines who can access Nova in non-local environments.
+     *
+     * @return void
+     */
+    protected function gate()
+    {
+        Gate::define('viewNova', fn () => true);
+    }
+
+    /**
+     * Get the dashboards that should be listed in the Nova sidebar.
+     *
+     * @return array
+     */
+    protected function dashboards()
+    {
+        return [
+            new Main(),
+        ];
     }
 }

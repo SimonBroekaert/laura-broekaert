@@ -47,7 +47,7 @@ class LayoutBuilder extends Component
     {
         $blocks = collect($blocks);
 
-        $blocks = $blocks->map(function (Layout $block) use ($blocks) {
+        return $blocks->map(function (Layout $block) use ($blocks) {
             $block->blade_component = "layout-builder.{$block->name()}";
             $block->data_index = $blocks->search($block);
             $block->data_type_index = $blocks->where(function (Layout $typeBlock) use ($block) {
@@ -56,7 +56,5 @@ class LayoutBuilder extends Component
 
             return $block;
         });
-
-        return $blocks;
     }
 }

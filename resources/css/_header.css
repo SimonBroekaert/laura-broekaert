@@ -16,7 +16,7 @@
     @apply h-full;
     @apply bg-white/0;
     @apply transition-all;
-    @apply -z-50;
+    @apply -z-40;
 }
 
 body[data-menu-state="opened"] .header-gradient::before {

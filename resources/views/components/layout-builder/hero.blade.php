@@ -2,12 +2,12 @@
 
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'relative bg-gradient-to-t from-black/50',
+	    'class' => 'layout-block bg-gradient-to-t from-black/50',
 	]);
 @endphp
 
 <section {{ $attributes }}>
-	<x-image :image="$block->image" format="hero" class="absolute inset-0 object-cover w-full h-full -z-10" />
+	<x-image :image="$block->image" format="hero" class="absolute inset-0 object-cover w-full h-full -z-1" />
 	<div class="container">
 		<div class="row">
 			<div class="col-12">

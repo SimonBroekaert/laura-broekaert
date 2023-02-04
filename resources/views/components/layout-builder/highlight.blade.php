@@ -2,12 +2,12 @@
 
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'relative lg:py-100 md:py-85 py-75',
+	    'class' => 'layout-block layout-block-padding',
 	]);
 @endphp
 
 <section {{ $attributes }}>
-	<x-image :image="$block->image" format="highlight" class="absolute inset-0 w-full h-full -z-10" />
+	<x-image :image="$block->image" format="highlight" class="absolute inset-0 w-full h-full -z-1" />
 	<div class="container">
 		<div class="justify-center row">
 			<div class="col-12 lg:col-10 xl:col-8">
@@ -21,7 +21,7 @@
 						{!! $block->body !!}
 					</div>
 					@if ($block->first_button || $block->second_button)
-						<div class="flex gap-20 mt-30">
+						<div class="flex flex-wrap items-center justify-center gap-20 sm:justify-start mt-30">
 							@if ($block->first_button)
 								<x-button :href="$block->first_button->link" :target="$block->first_button->target">
 									{{ $block->first_button->label }}

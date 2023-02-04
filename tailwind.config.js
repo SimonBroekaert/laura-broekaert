@@ -101,6 +101,9 @@ module.exports = {
       DEFAULT: '300ms',
     },
     extend: {
+      zIndex: {
+        "-1": -1,
+      },
       screens: {
         "betterhover": { "raw": "(hover: hover)" },
       },

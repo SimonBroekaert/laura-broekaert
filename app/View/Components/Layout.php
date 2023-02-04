@@ -51,7 +51,7 @@ class Layout extends Component
     {
         return collect([
             $this->title ?? $this->seo?->title,
-            'Personal Training | Laura Broekaert',
+            setting('seo.title_suffix', 'Personal Training | Laura Broekaert'),
         ])->filter()->implode(' | ');
     }
 

@@ -11,6 +11,7 @@
     @apply py-20;
     @apply translate-x-full;
     @apply transition-transform;
+    @apply z-50;
 
     width: min(100%, 100vw, 15.625rem);
     height: calc(100vh - theme("spacing.90"));
@@ -27,4 +28,22 @@
 
 body[data-menu-state="opened"] .menu {
     @apply translate-x-0;
+}
+
+.menu-backdrop {
+    @apply pointer-events-none;
+    @apply fixed;
+    @apply top-0;
+    @apply left-0;
+    @apply w-full;
+    @apply h-full;
+    @apply bg-black;
+    @apply opacity-0;
+    @apply transition-opacity;
+    @apply -z-50;
+}
+
+body[data-menu-state="opened"] .menu-backdrop {
+    @apply pointer-events-auto;
+    @apply opacity-50;
 }

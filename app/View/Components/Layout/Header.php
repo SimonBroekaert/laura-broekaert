@@ -26,6 +26,8 @@ class Header extends Component
      */
     public function render()
     {
-        return view('components.layout.header');
+        $brandName = setting('general_brand_name', 'Laura Broekaert');
+
+        return view('components.layout.header', compact('brandName'));
     }
 }

@@ -47,10 +47,12 @@
 	    'data-menu-state' => 'closed',
 	]) }}>
 	<x-layout.header />
-	<main class="pt-90">
-		{{ $slot }}
-	</main>
-	<x-layout.footer />
+	<div class="flex flex-col">
+		<main class="flex-grow pt-90">
+			{{ $slot }}
+		</main>
+		<x-layout.footer />
+	</div>
 </body>
 
 </html>

@@ -1,21 +1,22 @@
 <header class="fixed top-0 left-0 z-50 w-screen header-gradient">
 	<div class="container-fluid xl:container">
-		<div class="justify-between py-20 row">
+		<div class="items-center justify-between py-20 row">
 			<div class="col-auto">
 				<h1>
-					<a href="{{ route('home') }}" class="" aria-label="Logo - Laura Broekaert - Personal training">
-						<x-svg.logo class="h-60" />
+					<a href="{{ route('home') }}" class="" aria-label="Logo - {{ $brandName }}">
+						<x-svg.logo class="h-45 lg:h-60 text-gray-dark" />
 					</a>
-					<span class="sr-only">Laura Broekaert - Personal training</span>
+					<span class="sr-only">{{ $brandName }}</span>
 				</h1>
 			</div>
 			<div class="flex items-center col-auto">
+				<div class="menu-backdrop" data-menu-toggle></div>
 				<div class="menu custom-scrollbar">
 					<x-layout.navigation menu-key="main" :ul-attributes="[
 					    'class' => 'text-center lg:flex lg:items-center gap-20',
 					]" :li-attributes="[
 					    'class' =>
-					        'text-gray-dark transition-all font-bold text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center after:-z-10 mb-10 lg:mb-0',
+					        'text-gray-dark transition-all font-bold text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
 					]" :a-attributes="[
 					    'class' => 'p-5',
 					]" />
@@ -28,7 +29,7 @@
 					    'class' => 'text-center lg:flex lg:items-center gap-20',
 					]" :li-attributes="[
 					    'class' =>
-					        'text-gray-dark transition-all font-bold text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center after:-z-10 mb-10 lg:mb-0',
+					        'text-gray-dark transition-all font-bold text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
 					]"
 						:a-attributes="[
 						    'class' => 'p-5',

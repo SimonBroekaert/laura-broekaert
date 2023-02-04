@@ -2,7 +2,7 @@
 
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'relative lg:my-100 md:my-85 my-75',
+	    'class' => 'layout-block layout-block-margin',
 	]);
 @endphp
 
@@ -10,9 +10,9 @@
 	<div class="container">
 		<div @class([
 			'items-center justify-between row',
-			'md:flex-row-reverse' => isEven($block->data_type_index),
+			'lg:flex-row-reverse' => isEven($block->data_type_index),
 		])>
-			<div class="col-12 md:col-6">
+			<div class="col-12 lg:col-6">
 				<article data-aos="fade-up">
 					@if ($block->title)
 						<x-heading :level="2" class="text-gray-dark mb-30">
@@ -23,7 +23,7 @@
 						{!! $block->body !!}
 					</div>
 					@if ($block->first_button || $block->second_button)
-						<div class="flex gap-20 mt-30">
+						<div class="flex flex-wrap items-center justify-center gap-20 sm:justify-start mt-30">
 							@if ($block->first_button)
 								<x-button :href="$block->first_button->link" :target="$block->first_button->target">
 									{{ $block->first_button->label }}
@@ -38,7 +38,7 @@
 					@endif
 				</article>
 			</div>
-			<div class="mt-40 col-12 md:col-6 xl:col-5" data-carousel
+			<div class="mt-40 col-12 lg:col-6 xl:col-5" data-carousel
 				data-aos="{{ isEven($block->data_type_index) ? 'fade-left' : 'fade-right' }}">
 				<div class="relative w-full aspect-4/3">
 					@foreach ($block->images as $image)

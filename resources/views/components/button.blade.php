@@ -14,7 +14,7 @@
 	    'secondary' => 'text-white bg-gray-dark betterhover:group-hover/button:bg-black',
 	};
 	$attributes = $attributes->merge([
-	    'class' => "{$themeClasses} relative inline-block transition-all cursor-pointer select-none group/button after:-z-10 after:absolute after:top-10 after:left-10 after:border after:border-2 after:rounded after:w-full after:h-full",
+	    'class' => "{$themeClasses} relative inline-block transition-all cursor-pointer select-none group/button after:-z-1 after:absolute after:top-10 after:left-10 after:border after:border-2 after:rounded after:w-full after:h-full",
 	]);
 	$attributesSpan = (new \Illuminate\View\ComponentAttributeBag([]))->merge([
 	    'class' => "{$themeClassesSpan} block py-10 font-bold text-center transition-all rounded rfs:text-lg px-30 betterhover:group-hover/button:translate-x-5 betterhover:group-hover/button:translate-y-5",

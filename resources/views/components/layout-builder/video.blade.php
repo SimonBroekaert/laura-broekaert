@@ -2,7 +2,7 @@
 
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'relative lg:my-100 md:my-85 my-75',
+	    'class' => 'layout-block layout-block-margin',
 	]);
 @endphp
 

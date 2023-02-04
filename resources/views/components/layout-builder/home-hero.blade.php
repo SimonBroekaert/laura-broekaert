@@ -2,7 +2,7 @@
 
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'relative lg:my-100 md:my-85 my-75',
+	    'class' => 'layout-block layout-block-margin',
 	]);
 @endphp
 
@@ -14,7 +14,7 @@
 					{{ $block->title }}
 				</x-heading>
 				@if ($block->first_button || $block->second_button)
-					<div class="flex gap-20 mt-30" data-aos="fade">
+					<div class="flex flex-wrap items-center justify-center gap-20 sm:justify-start mt-30" data-aos="fade">
 						@if ($block->first_button)
 							<x-button :href="$block->first_button->link" :target="$block->first_button->target">
 								{{ $block->first_button->label }}

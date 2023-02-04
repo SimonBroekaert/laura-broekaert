@@ -2,12 +2,12 @@
 
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'relative lg:py-100 md:py-85 py-75',
+	    'class' => 'layout-block layout-block-padding',
 	]);
 @endphp
 
 <section {{ $attributes }}>
-	<x-image :image="$block->image" format="quote" class="absolute inset-0 w-full h-full -z-10" />
+	<x-image :image="$block->image" format="quote" class="absolute inset-0 w-full h-full -z-1" />
 	<div class="container">
 		<div class="justify-center row">
 			<div class="col-12 lg:col-10 xl:col-8">

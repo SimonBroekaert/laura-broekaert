@@ -7,10 +7,13 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use KABBOUCHI\LogsTool\LogsTool;
 use Laravel\Nova\Events\ServingNova;
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\Field;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Outl1ne\NovaSettings\NovaSettings;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -28,6 +31,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         Nova::serving(function (ServingNova $event) {
             app()->setLocale('en');
         });
+
+        $this->registerSettings();
     }
 
     /**
@@ -42,6 +47,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->canSee(function ($request) {
                     return $request->user()->is_developer;
                 }),
+            new NovaSettings(),
         ];
     }
 
@@ -169,5 +175,38 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new Main(),
         ];
+    }
+
+    /**
+     * Register the Nova settings.
+     *
+     * @return void
+     */
+    protected function registerSettings()
+    {
+        NovaSettings::addSettingsFields([
+            Text::make('Brand Name', 'general_brand_name')
+                ->rules('required', 'max:255'),
+        ], [], 'General');
+
+        NovaSettings::addSettingsFields([
+            Text::make('Title suffix', 'seo_title_suffix')
+                ->rules('required', 'max:255'),
+        ], [], 'SEO');
+
+        NovaSettings::addSettingsFields([
+            Email::make('Email', 'contact_email')
+                ->rules('required', 'max:255'),
+            Text::make('Phone', 'contact_phone')
+                ->rules('required', 'max:255'),
+        ], [], 'Contact');
+
+        NovaSettings::addSettingsFields([
+            Text::make('Facebook', 'socials_facebook'),
+            Text::make('Instagram', 'socials_instagram'),
+            Text::make('YouTube', 'socials_youtube'),
+            Text::make('TikTok', 'socials_tiktok'),
+            Text::make('Twitter', 'socials_twitter'),
+        ], [], 'Socials');
     }
 }

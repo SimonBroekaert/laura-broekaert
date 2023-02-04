@@ -2,10 +2,11 @@
 
 namespace App\Nova;
 
+use App\Enums\UserType;
 use Illuminate\Validation\Rules\Password as RulesPassword;
-use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -51,9 +52,14 @@ class User extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
+            ID::make()
+                ->sortable()
+                ->onlyOnDetail(),
 
-            Gravatar::make()->maxWidth(50),
+            Select::make('Type', 'type')
+                ->rules('required')
+                ->options(UserType::labels())
+                ->displayUsingLabels(),
 
             Text::make('Name')
                 ->sortable()

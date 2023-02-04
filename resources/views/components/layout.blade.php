@@ -47,8 +47,8 @@
 	    'data-menu-state' => 'closed',
 	]) }}>
 	<x-layout.header />
-	<div class="flex flex-col">
-		<main class="flex-grow pt-90">
+	<div class="flex flex-col min-h-screen">
+		<main class="flex-grow">
 			{{ $slot }}
 		</main>
 		<x-layout.footer />

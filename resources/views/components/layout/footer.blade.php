@@ -39,14 +39,14 @@
 		</div>
 		<div class="items-center justify-center md:justify-between row mt-30">
 			<div class="order-2 col-auto basis-full md:basis-auto md:order-1 mt-30 md:mt-0">
-				<p class="text-sm text-center text-gray-light">&copy; {{ now()->year }} {{ $brandName }}</p>
+				<p class="rfs:text-sm text-center text-gray-light">&copy; {{ now()->year }} {{ $brandName }}</p>
 			</div>
 			<div class="order-1 col-auto basis-full md:basis-auto md:order-2">
 				<x-layout.navigation menu-key="main" :ul-attributes="[
 				    'class' => 'text-center lg:flex lg:items-center gap-20 lg:justify-end',
 				]" :li-attributes="[
 				    'class' =>
-				        'text-gray-light transition-all font-bold text-sm [&.is-active]:text-primary [&.is-active]:after:bg-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-gray-light after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
+				        'text-gray-light transition-all font-bold rfs:text-sm [&.is-active]:text-primary [&.is-active]:after:bg-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-gray-light after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
 				]" :a-attributes="[
 				    'class' => 'block p-5',
 				]" />
@@ -54,7 +54,7 @@
 				    'class' => 'text-center lg:flex lg:items-center gap-20 lg:justify-end',
 				]" :li-attributes="[
 				    'class' =>
-				        'text-gray-light transition-all font-bold text-sm [&.is-active]:text-primary [&.is-active]:after:bg-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-gray-light after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
+				        'text-gray-light transition-all font-bold rfs:text-sm [&.is-active]:text-primary [&.is-active]:after:bg-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-gray-light after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
 				]" :a-attributes="[
 				    'class' => 'block p-5',
 				]" />

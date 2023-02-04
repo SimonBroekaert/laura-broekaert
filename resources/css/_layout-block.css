@@ -8,14 +8,22 @@
     @apply lg:my-100;
 }
 
-[data-block-index="0"].layout-block-margin {
-    @apply my-25;
-    @apply md:my-40;
-    @apply lg:my-50;
+[data-block-index="0"].layout-block-margin,
+[data-block-index="0"] .layout-block-margin {
+    @apply mt-[105px];
+    @apply md:mt-[130px];
+    @apply lg:mt-[140px];
 }
 
 .layout-block-padding {
     @apply py-50;
     @apply md:py-75;
     @apply lg:py-100;
+}
+
+[data-block-index="0"].layout-block-padding,
+[data-block-index="0"] .layout-block-padding {
+    @apply pt-[140px];
+    @apply md:pt-[165px];
+    @apply lg:pt-[190px];
 }

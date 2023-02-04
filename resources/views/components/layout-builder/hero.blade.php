@@ -11,7 +11,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<div class="lg:my-100 md:my-85 my-75" data-aos="zoom-out">
+				<div class="layout-block-margin" data-aos="zoom-out">
 					<x-heading :level="2" :style-level="1" class="text-center text-white">
 						{{ $block->title }}
 					</x-heading>

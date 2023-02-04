@@ -72,4 +72,8 @@
     .tiptap.tiptap-with-background li {
         @apply text-white;
     }
+
+    .tiptap.tiptap-compact * {
+        @apply m-0;
+    }
 }

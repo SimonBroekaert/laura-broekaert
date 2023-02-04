@@ -24,9 +24,10 @@ class DefaultPreset extends Preset
         $field->addLayout(Hero::class);
         $field->addLayout(Article::class);
         $field->addLayout(ArticleWithMedia::class);
-        $field->addLayout(Images::class);
-        $field->addLayout(Video::class);
         $field->addLayout(Highlight::class);
+        $field->addLayout(Images::class);
+        $field->addLayout(Plans::class);
         $field->addLayout(Quote::class);
+        $field->addLayout(Video::class);
     }
 }

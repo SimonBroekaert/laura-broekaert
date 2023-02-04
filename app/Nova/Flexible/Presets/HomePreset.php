@@ -7,6 +7,7 @@ use App\Nova\Flexible\Layouts\ArticleWithMedia;
 use App\Nova\Flexible\Layouts\Highlight;
 use App\Nova\Flexible\Layouts\HomeHero;
 use App\Nova\Flexible\Layouts\Images;
+use App\Nova\Flexible\Layouts\Plans;
 use App\Nova\Flexible\Layouts\Quote;
 use App\Nova\Flexible\Layouts\Video;
 use Whitecube\NovaFlexibleContent\Flexible;
@@ -24,9 +25,10 @@ class HomePreset extends Preset
         $field->addLayout(HomeHero::class);
         $field->addLayout(Article::class);
         $field->addLayout(ArticleWithMedia::class);
-        $field->addLayout(Images::class);
-        $field->addLayout(Video::class);
         $field->addLayout(Highlight::class);
+        $field->addLayout(Images::class);
+        $field->addLayout(Plans::class);
         $field->addLayout(Quote::class);
+        $field->addLayout(Video::class);
     }
 }

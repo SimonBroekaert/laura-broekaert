@@ -2,21 +2,14 @@
 
 namespace App\Nova;
 
-use App\Enums\PredefinedPage;
-use App\Nova\Flexible\Presets\DefaultPreset;
-use App\Nova\Flexible\Presets\HomePreset;
 use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestampFields;
-use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Panel;
-use Whitecube\NovaFlexibleContent\Flexible;
 
-class Page extends Resource
+class Location extends Resource
 {
     use HasDeveloperFields;
     use HasTimestampFields;
@@ -24,23 +17,23 @@ class Page extends Resource
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Page>
+     * @var class-string<\App\Models\Location>
      */
-    public static $model = \App\Models\Page::class;
+    public static $model = \App\Models\Location::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Site Builder';
+    public static $group = 'Plans';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -49,27 +42,18 @@ class Page extends Resource
      */
     public static $search = [
         'id',
-        'title',
+        'name',
         'developer_id',
+        'street',
+        'street_number',
+        'postal_code',
+        'city',
     ];
-
-    /**
-     * Determine if the current user can delete the given resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return bool
-     */
-    public function authorizedToDelete(Request $request)
-    {
-        return in_array($this->developer_id, PredefinedPage::cases());
-    }
 
     /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -79,38 +63,34 @@ class Page extends Resource
                 ->sortable()
                 ->onlyOnDetail(),
 
-            Text::make('Title', 'title')
-                ->rules('required', 'max:255', 'unique:pages,title,{{resourceId}}')
+            Text::make('Name', 'name')
+                ->rules('required', 'max:255', 'unique:locations,name,{{resourceId}}')
                 ->sortable(),
 
             Text::make('Slug', 'slug')
-                ->rules('required', 'max:255', 'unique:pages,slug,{{resourceId}}')
+                ->rules('required', 'max:255', 'unique:locations,slug,{{resourceId}}')
                 ->onlyOnDetail(),
 
-            Flexible::make('Body', 'body')
-                ->preset(match ($this->developer_id) {
-                    PredefinedPage::PAGE_HOME->value => HomePreset::class,
-                    default => DefaultPreset::class,
-                }),
+            Text::make('Street', 'street')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
 
-            Boolean::make('Online', 'is_online')
-                ->default(true)
-                ->sortable()
-                ->filterable(),
+            Text::make('Street Number', 'street_number')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
 
-            Panel::make('SEO', [
-                Text::make('Title', 'seo_title')
-                    ->rules('max:100')
-                    ->hideFromIndex(),
+            Text::make('Postal Code', 'postal_code')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
 
-                Text::make('Description', 'seo_description')
-                    ->rules('max:300')
-                    ->hideFromIndex(),
+            Text::make('City', 'city')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
 
-                Images::make('Image', 'seo_image')
-                    ->hideFromIndex()
-                    ->hideFromIndex(),
-            ]),
+            Text::make('Address', fn () => $this->address->full)
+                ->onlyOnIndex(),
+
+            HasMany::make('Plan Types', 'planTypes', PlanType::class),
 
             ...$this->timestampFields(),
             ...$this->developerFields(),
@@ -121,7 +101,6 @@ class Page extends Resource
      * Get the cards available for the request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -133,7 +112,6 @@ class Page extends Resource
      * Get the filters available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -145,7 +123,6 @@ class Page extends Resource
      * Get the lenses available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -157,7 +134,6 @@ class Page extends Resource
      * Get the actions available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function actions(NovaRequest $request)

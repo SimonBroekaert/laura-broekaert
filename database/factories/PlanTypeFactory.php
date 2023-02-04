@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Page>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PlanType>
  */
-class PageFactory extends Factory
+class PlanTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,19 +17,19 @@ class PageFactory extends Factory
      */
     public function definition()
     {
-        $title = fake()->unique()->word();
+        $name = fake()->unique()->word();
 
         return [
             'developer_id' => fake()->unique()->word(),
-            'title' => $title,
-            'slug' => Str::slug($title),
-            'body' => null,
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'amount_of_persons' => fake()->numberBetween(1, 3),
             'is_online' => fake()->boolean(),
         ];
     }
 
     /**
-     * Indicate that the page is online.
+     * Indicate that the plan type is online.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */

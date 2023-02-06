@@ -7,6 +7,7 @@ use App\Nova\Flexible\Layouts\ArticleWithMedia;
 use App\Nova\Flexible\Layouts\Hero;
 use App\Nova\Flexible\Layouts\Highlight;
 use App\Nova\Flexible\Layouts\Images;
+use App\Nova\Flexible\Layouts\Plans;
 use App\Nova\Flexible\Layouts\Quote;
 use App\Nova\Flexible\Layouts\Video;
 use Whitecube\NovaFlexibleContent\Flexible;

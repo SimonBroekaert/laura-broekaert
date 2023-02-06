@@ -18,14 +18,15 @@
 					</div>
 				@endif
 				<div class="col-12">
-					<ul class="items-stretch pb-10 overflow-hidden flex-nowrap row" data-scroll-list="{{ $block->key() }}">
+					<ul class="items-stretch pb-20 overflow-hidden flex-nowrap row" data-scroll-list="{{ $block->key() }}">
 						@php
-							$liClasses = 'col-12 lg:col-6 xl:col-4';
+							$liClasses = 'col-12 lg:col-6 2xl:col-4';
 						@endphp
 						@foreach ($planTypes as $planType)
 							<li class="{{ $liClasses }}" data-scroll-list-item>
-								<a href="#" class="block h-full">
-									<x-heading :level="3" class="mb-10 text-gray-dark">
+								<a href="#"
+									class="block h-full p-20 transition-all bg-white border rounded shadow border-gray betterhover:hover:shadow-lg">
+									<x-heading :level="3" class="mb-10 text-primary">
 										{{ $planType->name }}
 									</x-heading>
 									<ul>
@@ -50,8 +51,9 @@
 						@endforeach
 						@if ($block->show_custom)
 							<li class="{{ $liClasses }}" data-scroll-list-item>
-								<a href="#" class="block h-full">
-									<x-heading :level="3" class="mb-10 text-gray-dark">
+								<a href="#"
+									class="block h-full p-20 transition-all bg-white border rounded shadow border-gray betterhover:hover:shadow-lg">
+									<x-heading :level="3" class="mb-10 text-primary">
 										Plan op maat
 									</x-heading>
 									<div class="tiptap">
@@ -73,7 +75,7 @@
 								</div>
 							@endif
 						</div>
-						<div class="col-12 md:col-auto mt-30 md:mt-0">
+						<div class="col-12 lg:col-auto mt-30 lg:mt-0">
 							<div class="flex justify-end gap-20">
 								<x-button theme="secondary" title="Scroll naar links" data-carousel-control="previous"
 									data-scroll-list-control="{{ $block->key() }}" data-direction="left" data-disabled-class="opacity-20">

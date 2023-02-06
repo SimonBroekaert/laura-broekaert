@@ -1,5 +1,5 @@
 <header class="fixed top-0 left-0 z-50 w-screen header-gradient">
-	<div class="container-fluid xl:container">
+	<div class="container-fluid lg:container">
 		<div class="items-center justify-between py-20 row">
 			<div class="col-auto">
 				<h1>

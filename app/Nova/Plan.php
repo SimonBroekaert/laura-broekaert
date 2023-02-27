@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestampFields;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Currency;
@@ -61,6 +63,43 @@ class Plan extends Resource
     ];
 
     /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    protected static function afterValidation(NovaRequest $request, $validator)
+    {
+        $planTypeId = $request->input('type_id');
+        $planType = PlanType::newModel()->find($planTypeId);
+
+        $uniqueNameValidator = Validator::make($request->only('name'), [
+            'name' => [
+                Rule::unique('plans', 'name')
+                    ->where('plan_type_id', $planTypeId)
+                    ->ignore($request->input('id')),
+            ],
+        ]);
+
+        if ($uniqueNameValidator->fails()) {
+            $validator->errors()->add('name', $uniqueNameValidator->errors()->first('name'));
+        }
+
+        $uniqueSlugValidator = Validator::make($request->only('slug'), [
+            'slug' => [
+                Rule::unique('plans', 'slug')
+                    ->where('plan_type_id', $planTypeId)
+                    ->ignore($request->input('id')),
+            ],
+        ]);
+
+        if ($uniqueSlugValidator->fails()) {
+            $validator->errors()->add('slug', $uniqueSlugValidator->errors()->first('slug'));
+        }
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -78,11 +117,11 @@ class Plan extends Resource
                 ->sortable(),
 
             Text::make('Name', 'name')
-                ->rules('required', 'max:255', 'unique:plans,name,{{resourceId}}')
+                ->rules('required', 'max:255')
                 ->sortable(),
 
             Text::make('Slug', 'slug')
-                ->rules('required', 'max:255', 'unique:plans,slug,{{resourceId}}')
+                ->rules('required', 'max:255')
                 ->onlyOnDetail(),
 
             Tiptap::make('Description', 'description')

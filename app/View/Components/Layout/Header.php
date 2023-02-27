@@ -4,6 +4,7 @@ namespace App\View\Components\Layout;
 
 use App\Enums\PredefinedPage;
 use App\Models\Page;
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Header extends Component
@@ -26,7 +27,7 @@ class Header extends Component
      */
     public function render()
     {
-        $brandName = setting('general_brand_name', 'Laura Broekaert');
+        $brandName = setting('general_brand_name', Str::headline(config('app.name')));
 
         return view('components.layout.header', compact('brandName'));
     }

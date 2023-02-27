@@ -35,17 +35,17 @@ export default {
 
   computed: {
     computedValue() {
-      const videoId = this.value;
+      let videoId = this.value;
       if (!videoId) {
         return null;
       }
       // Check if value is a youtube url (or short url)
       if (
-        this.value.indexOf("youtube.com") > -1 &&
-        this.value.indexOf("youtu.be") > -1
+        videoId.indexOf("youtube.com") > -1 ||
+        videoId.indexOf("youtu.be") > -1
       ) {
         // Get the video id from the url
-        const videoId = this.value.split("v=")[1];
+        videoId = this.value.split("v=")[1];
         if (!videoId) {
           return null;
         }

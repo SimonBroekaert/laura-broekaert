@@ -11,7 +11,7 @@
           v-model="value.route"
           class="block w-full form-control form-select form-select-bordered"
         >
-          <option value="" disabled selected>Choose an option</option>
+          <option value="" selected>Choose an option</option>
           <optgroup label="Website">
             <option v-for="route in field.routes" :value="route.name">
               {{ route.label }}

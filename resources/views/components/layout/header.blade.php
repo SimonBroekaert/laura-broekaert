@@ -16,7 +16,7 @@
 					    'class' => 'text-center lg:flex lg:items-center gap-20',
 					]" :li-attributes="[
 					    'class' =>
-					        'text-gray-dark transition-all font-bold rfs:text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
+					        'text-gray-dark transition-all font-bold rfs:text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-20 last:mb-0 lg:mb-0',
 					]" :a-attributes="[
 					    'class' => 'p-5',
 					]" />
@@ -29,7 +29,7 @@
 					    'class' => 'text-center lg:flex lg:items-center gap-20',
 					]" :li-attributes="[
 					    'class' =>
-					        'text-gray-dark transition-all font-bold rfs:text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-10 lg:mb-0',
+					        'text-gray-dark transition-all font-bold rfs:text-lg [&.is-active]:text-primary relative after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:bg-primary after:h-2 betterhover:hover:after:w-4/5 after:transition-all after:origin-center mb-20 last:mb-0 lg:mb-0',
 					]"
 						:a-attributes="[
 						    'class' => 'p-5',

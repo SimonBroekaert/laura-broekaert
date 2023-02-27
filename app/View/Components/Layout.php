@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Layout extends Component
@@ -51,7 +52,7 @@ class Layout extends Component
     {
         return collect([
             $this->title ?? $this->seo?->title,
-            setting('seo.title_suffix', 'Personal Training | Laura Broekaert'),
+            setting('seo.title_suffix', Str::headline(config('app.name'))),
         ])->filter()->implode(' | ');
     }
 
@@ -66,6 +67,6 @@ class Layout extends Component
         $host = config('app.url');
         $url = request()->url();
 
-        return str_replace(request()->getHttpHost(), $host, $url);
+        return str_replace(request()->getSchemeAndHttpHost(), $host, $url);
     }
 }

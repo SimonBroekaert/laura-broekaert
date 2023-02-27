@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Layout;
 
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class Footer extends Component
@@ -13,7 +14,7 @@ class Footer extends Component
      */
     public function render()
     {
-        $brandName = setting('general_brand_name', 'Laura Broekaert');
+        $brandName = setting('general_brand_name', Str::headline(config('app.name')));
         $email = setting('contact_email');
         $phone = setting('contact_phone');
         $socials = collect([

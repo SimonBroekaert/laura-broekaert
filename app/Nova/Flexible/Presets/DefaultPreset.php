@@ -4,6 +4,7 @@ namespace App\Nova\Flexible\Presets;
 
 use App\Nova\Flexible\Layouts\Article;
 use App\Nova\Flexible\Layouts\ArticleWithMedia;
+use App\Nova\Flexible\Layouts\Gallery;
 use App\Nova\Flexible\Layouts\Hero;
 use App\Nova\Flexible\Layouts\Highlight;
 use App\Nova\Flexible\Layouts\Images;
@@ -26,6 +27,7 @@ class DefaultPreset extends Preset
         $field->addLayout(Article::class);
         $field->addLayout(ArticleWithMedia::class);
         $field->addLayout(Highlight::class);
+        $field->addLayout(Gallery::class);
         $field->addLayout(Images::class);
         $field->addLayout(Plans::class);
         $field->addLayout(Quote::class);

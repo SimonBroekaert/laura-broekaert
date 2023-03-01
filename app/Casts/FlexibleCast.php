@@ -12,6 +12,7 @@ class FlexibleCast extends BaseFlexibleCast
         'hero' => \App\Nova\Flexible\Layouts\Hero::class,
         'article' => \App\Nova\Flexible\Layouts\Article::class,
         'article-with-media' => \App\Nova\Flexible\Layouts\ArticleWithMedia::class,
+        'gallery' => \App\Nova\Flexible\Layouts\Gallery::class,
         'images' => \App\Nova\Flexible\Layouts\Images::class,
         'video' => \App\Nova\Flexible\Layouts\Video::class,
         'highlight' => \App\Nova\Flexible\Layouts\Highlight::class,

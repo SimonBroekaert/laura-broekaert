@@ -122,6 +122,9 @@ class Page extends Model implements HasMedia
         // Add Conversions for the Layout Builder Image block images
         $this->addImageBlockConversions($media);
 
+        // Add Conversions for the Layout Builder Gallery block images
+        $this->addGalleryBlockConversions($media);
+
         // Add Conversions for the Layout Builder Highlight block images
         $this->addHighlightBlockConversions($media);
 
@@ -323,6 +326,31 @@ class Page extends Model implements HasMedia
         // Add a webp variant
         $this->addMediaConversion('images-webp')
             ->fit(Manipulations::FIT_CROP, 2560, 1440)
+            ->format('webp')
+            ->withResponsiveImages();
+    }
+
+    /**
+     * Method: addGalleryBlockConversions.
+     *
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
+     *
+     * @return void
+     */
+    protected function addGalleryBlockConversions(?Media $media = null): void
+    {
+        if (! $media || ! Str::startsWith($media->collection_name, 'gallery_images_')) {
+            return;
+        }
+
+        // Crop the image to a 9:16 ratio and add responsive images
+        $this->addMediaConversion('gallery')
+            ->fit(Manipulations::FIT_CROP, 1240, 930)
+            ->withResponsiveImages();
+
+        // Add a webp variant
+        $this->addMediaConversion('gallery-webp')
+            ->fit(Manipulations::FIT_CROP, 1240, 930)
             ->format('webp')
             ->withResponsiveImages();
     }

@@ -2,36 +2,28 @@
 
 namespace App\Nova;
 
-use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestampFields;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Outl1ne\NovaSortable\Traits\HasSortableRows;
 
-class PlanType extends Resource
+class ClientBusiness extends Resource
 {
-    use HasDeveloperFields;
-    use HasSortableRows;
     use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\PlanType>
+     * @var class-string<\App\Models\ClientBusiness>
      */
-    public static $model = \App\Models\PlanType::class;
+    public static $model = \App\Models\ClientBusiness::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Plans';
+    public static $group = 'Clients';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,7 +40,7 @@ class PlanType extends Resource
     public static $search = [
         'id',
         'name',
-        'developer_id',
+        'vat_number',
     ];
 
     /**
@@ -65,31 +57,31 @@ class PlanType extends Resource
                 ->sortable()
                 ->onlyOnDetail(),
 
-            Text::make('Name', 'name')
-                ->rules('required', 'max:255', 'unique:plan_types,name,{{resourceId}}')
-                ->sortable(),
-
-            Text::make('Slug', 'slug')
-                ->rules('required', 'max:255', 'unique:plan_types,slug,{{resourceId}}')
-                ->onlyOnDetail(),
-
-            BelongsTo::make('Location', 'location', Location::class)
-                ->nullable()
-                ->sortable(),
-
-            Number::make('Amount of persons', 'amount_of_persons')
-                ->rules('required', 'integer', 'min:1')
-                ->sortable(),
-
-            Boolean::make('Online', 'is_online')
-                ->default(true)
+            Text::make('Name')
                 ->sortable()
-                ->filterable(),
+                ->rules('required', 'max:255'),
 
-            HasMany::make('Plans', 'plans', Plan::class),
+            Text::make('BTW Number', 'vat_number')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Street')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Number', 'street_number')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Postal Code', 'postal_code')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('City')
+                ->sortable()
+                ->rules('required', 'max:255'),
 
             ...$this->timestampFields(),
-            ...$this->developerFields(),
         ];
     }
 

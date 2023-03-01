@@ -2,43 +2,33 @@
 
 namespace App\Nova;
 
-use App\Nova\Traits\HasDeveloperFields;
+use App\Enums\ClientStatus;
 use App\Nova\Traits\HasTimestampFields;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Outl1ne\NovaSortable\Traits\HasSortableRows;
 
-class PlanType extends Resource
+class Client extends Resource
 {
-    use HasDeveloperFields;
-    use HasSortableRows;
     use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\PlanType>
+     * @var class-string<\App\Models\Client>
      */
-    public static $model = \App\Models\PlanType::class;
-
-    /**
-     * The logical group associated with the resource.
-     *
-     * @var string
-     */
-    public static $group = 'Plans';
+    public static $model = \App\Models\Client::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'full_name';
 
     /**
      * The columns that should be searched.
@@ -47,8 +37,10 @@ class PlanType extends Resource
      */
     public static $search = [
         'id',
-        'name',
-        'developer_id',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
     ];
 
     /**
@@ -65,31 +57,49 @@ class PlanType extends Resource
                 ->sortable()
                 ->onlyOnDetail(),
 
-            Text::make('Name', 'name')
-                ->rules('required', 'max:255', 'unique:plan_types,name,{{resourceId}}')
-                ->sortable(),
-
-            Text::make('Slug', 'slug')
-                ->rules('required', 'max:255', 'unique:plan_types,slug,{{resourceId}}')
-                ->onlyOnDetail(),
-
-            BelongsTo::make('Location', 'location', Location::class)
-                ->nullable()
-                ->sortable(),
-
-            Number::make('Amount of persons', 'amount_of_persons')
-                ->rules('required', 'integer', 'min:1')
-                ->sortable(),
-
-            Boolean::make('Online', 'is_online')
-                ->default(true)
+            Text::make('First Name', 'first_name')
                 ->sortable()
-                ->filterable(),
+                ->rules('required', 'max:255'),
 
-            HasMany::make('Plans', 'plans', Plan::class),
+            Text::make('Last Name', 'last_name')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'email', 'max:255'),
+
+            Text::make('Phone')
+                ->sortable()
+                ->rules('required', 'max:255'),
+
+            Date::make('Date of Birth', 'date_of_birth')
+                ->sortable()
+                ->rules('required', 'date'),
+
+            Select::make('Status')
+                ->sortable()
+                ->rules('required')
+                ->options(ClientStatus::labels())
+                ->displayUsingLabels(),
+
+            BelongsTo::make('Business', 'business', ClientBusiness::class)
+                ->sortable()
+                ->rules('nullable'),
+
+            BelongsTo::make('Interested in Plan Type', 'planTypeOfInterest', PlanType::class)
+                ->sortable()
+                ->rules('nullable'),
+
+            BelongsTo::make('Interested in Plan', 'planOfInterest', Plan::class)
+                ->sortable()
+                ->rules('nullable'),
+
+            Boolean::make('Interested in Custom Plan', 'is_interested_in_custom_plan')
+                ->sortable()
+                ->rules('nullable'),
 
             ...$this->timestampFields(),
-            ...$this->developerFields(),
         ];
     }
 

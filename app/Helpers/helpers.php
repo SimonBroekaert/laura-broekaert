@@ -1,6 +1,5 @@
 <?php
 
-
 if (! function_exists('isOdd')) {
     /**
      * Check if a number is odd.

@@ -63,46 +63,10 @@ class Plan extends Resource
     ];
 
     /**
-     * Handle any post-validation processing.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @param  \Illuminate\Validation\Validator  $validator
-     * @return void
-     */
-    protected static function afterValidation(NovaRequest $request, $validator)
-    {
-        $planTypeId = $request->input('type_id');
-        $planType = PlanType::newModel()->find($planTypeId);
-
-        $uniqueNameValidator = Validator::make($request->only('name'), [
-            'name' => [
-                Rule::unique('plans', 'name')
-                    ->where('plan_type_id', $planTypeId)
-                    ->ignore($request->input('id')),
-            ],
-        ]);
-
-        if ($uniqueNameValidator->fails()) {
-            $validator->errors()->add('name', $uniqueNameValidator->errors()->first('name'));
-        }
-
-        $uniqueSlugValidator = Validator::make($request->only('slug'), [
-            'slug' => [
-                Rule::unique('plans', 'slug')
-                    ->where('plan_type_id', $planTypeId)
-                    ->ignore($request->input('id')),
-            ],
-        ]);
-
-        if ($uniqueSlugValidator->fails()) {
-            $validator->errors()->add('slug', $uniqueSlugValidator->errors()->first('slug'));
-        }
-    }
-
-    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -199,6 +163,7 @@ class Plan extends Resource
      * Get the cards available for the request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -210,6 +175,7 @@ class Plan extends Resource
      * Get the filters available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -221,6 +187,7 @@ class Plan extends Resource
      * Get the lenses available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -232,10 +199,49 @@ class Plan extends Resource
      * Get the actions available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     *
      * @return array
      */
     public function actions(NovaRequest $request)
     {
         return [];
+    }
+
+    /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Validation\Validator  $validator
+     *
+     * @return void
+     */
+    protected static function afterValidation(NovaRequest $request, $validator)
+    {
+        $planTypeId = $request->input('type_id');
+        $planType = PlanType::newModel()->find($planTypeId);
+
+        $uniqueNameValidator = Validator::make($request->only('name'), [
+            'name' => [
+                Rule::unique('plans', 'name')
+                    ->where('plan_type_id', $planTypeId)
+                    ->ignore($request->input('id')),
+            ],
+        ]);
+
+        if ($uniqueNameValidator->fails()) {
+            $validator->errors()->add('name', $uniqueNameValidator->errors()->first('name'));
+        }
+
+        $uniqueSlugValidator = Validator::make($request->only('slug'), [
+            'slug' => [
+                Rule::unique('plans', 'slug')
+                    ->where('plan_type_id', $planTypeId)
+                    ->ignore($request->input('id')),
+            ],
+        ]);
+
+        if ($uniqueSlugValidator->fails()) {
+            $validator->errors()->add('slug', $uniqueSlugValidator->errors()->first('slug'));
+        }
     }
 }

@@ -13,7 +13,7 @@ trait CalculatesPrices
      */
     public function calculateDiscount(): self
     {
-        $this->discount_amount = $this->base_price * ($this->discount_percentage / 100);
+        $this->discount_amount = $this->base_price * $this->discount_percentage / 100;
 
         return $this;
     }
@@ -25,7 +25,7 @@ trait CalculatesPrices
      */
     public function calculateTaxAmount(): self
     {
-        $this->tax_amount = $this->price_with_discount * ($this->tax_percentage / 100);
+        $this->tax_amount = $this->price_with_discount * $this->tax_percentage / 100;
 
         return $this;
     }

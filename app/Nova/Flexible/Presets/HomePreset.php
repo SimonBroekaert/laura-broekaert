@@ -4,6 +4,7 @@ namespace App\Nova\Flexible\Presets;
 
 use App\Nova\Flexible\Layouts\Article;
 use App\Nova\Flexible\Layouts\ArticleWithMedia;
+use App\Nova\Flexible\Layouts\Form;
 use App\Nova\Flexible\Layouts\Gallery;
 use App\Nova\Flexible\Layouts\Highlight;
 use App\Nova\Flexible\Layouts\HomeHero;
@@ -32,5 +33,6 @@ class HomePreset extends Preset
         $field->addLayout(Plans::class);
         $field->addLayout(Quote::class);
         $field->addLayout(Video::class);
+        $field->addLayout(Form::class);
     }
 }

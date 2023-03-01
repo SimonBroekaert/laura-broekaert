@@ -1,0 +1,62 @@
+# TODO's
+
+- [ ] Finish Contact Form
+  - [ ] Add GDPR checkbox
+  - [ ] Add Privacy Policy Predefined Page
+  - [ ] Make it possible to write email text
+  - [ ] Send email to admin
+  - [ ] Send email to user
+  - [ ] Make mails look nice
+- [ ] Create Client Business
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+- [ ] Create Client
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+  - [ ] Make action to create client from contact form entry
+  - [ ] Link to Client Business as belongsTo
+- [ ] Create Interest Form
+  - [ ] Create Livewire Component
+  - [ ] Save entries as Clients (with status "interested")
+  - [ ] Send email to admin
+  - [ ] Send email to user
+- [ ] Create Plan
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+  - [ ] Link to Client as belongsToMany
+- [ ] Create Session
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+  - [ ] Link to Client as belongsToManyThrough
+  - [ ] Link to Plan as belongsTo
+- [ ] Create Payment
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+  - [ ] Link to Plan as belongsToThrough
+  - [ ] Link to Client as belongsTo
+- [ ] Create ClientStat
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+  - [ ] Create ClientStatType Enum
+  - [ ] Link to Client as belongsTo
+- [ ] Create Comment
+  - [ ] Create Model
+  - [ ] Create Migration
+  - [ ] Create Factory
+  - [ ] Create Nova Resource
+  - [ ] Link to Client as morphTo
+  - [ ] Link to Plan as morphTo
+  - [ ] Link to ClientStat as morphTo
+- [ ] Test everything

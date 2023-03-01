@@ -2,37 +2,36 @@
 
 namespace App\Nova;
 
-use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestampFields;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Location extends Resource
+class ContactFormEntry extends Resource
 {
-    use HasDeveloperFields;
     use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Location>
+     * @var class-string<\App\Models\ContactFormEntry>
      */
-    public static $model = \App\Models\Location::class;
+    public static $model = \App\Models\ContactFormEntry::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Locations';
+    public static $group = 'Contact';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'full_name';
 
     /**
      * The columns that should be searched.
@@ -41,19 +40,27 @@ class Location extends Resource
      */
     public static $search = [
         'id',
-        'name',
-        'developer_id',
-        'street',
-        'street_number',
-        'postal_code',
-        'city',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'subject',
     ];
+
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return 'Form Entries';
+    }
 
     /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -63,35 +70,30 @@ class Location extends Resource
                 ->sortable()
                 ->onlyOnDetail(),
 
-            Text::make('Name', 'name')
-                ->rules('required', 'max:255', 'unique:locations,name,{{resourceId}}')
-                ->sortable(),
+            Text::make('First Name', 'first_name')
+                ->sortable()
+                ->rules('required', 'max:255'),
 
-            Text::make('Slug', 'slug')
-                ->rules('required', 'max:255', 'unique:locations,slug,{{resourceId}}')
-                ->onlyOnDetail(),
+            Text::make('Last Name', 'last_name')
+                ->sortable()
+                ->rules('required', 'max:255'),
 
-            Text::make('Street', 'street')
+            Text::make('Email', 'email')
+                ->sortable()
+                ->rules('required', 'max:255', 'email'),
+
+            Text::make('Phone', 'phone')
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
 
-            Text::make('Street Number', 'street_number')
+            Text::make('Subject', 'subject')
+                ->rules('required', 'max:255'),
+
+            Textarea::make('Message', 'message')
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
-
-            Text::make('Postal Code', 'postal_code')
-                ->rules('required', 'max:255')
-                ->hideFromIndex(),
-
-            Text::make('City', 'city')
-                ->rules('required', 'max:255')
-                ->hideFromIndex(),
-
-            Text::make('Address', fn () => $this->address->full)
-                ->onlyOnIndex(),
 
             ...$this->timestampFields(),
-            ...$this->developerFields(),
         ];
     }
 
@@ -99,7 +101,6 @@ class Location extends Resource
      * Get the cards available for the request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -111,7 +112,6 @@ class Location extends Resource
      * Get the filters available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -123,7 +123,6 @@ class Location extends Resource
      * Get the lenses available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -135,7 +134,6 @@ class Location extends Resource
      * Get the actions available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function actions(NovaRequest $request)

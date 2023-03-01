@@ -18,6 +18,7 @@ class FlexibleCast extends BaseFlexibleCast
         'highlight' => \App\Nova\Flexible\Layouts\Highlight::class,
         'quote' => \App\Nova\Flexible\Layouts\Quote::class,
         'plans' => \App\Nova\Flexible\Layouts\Plans::class,
+        'form' => \App\Nova\Flexible\Layouts\Form::class,
         // Other
         'plan-bundle' => \App\Nova\Flexible\Layouts\PlanBundle::class,
     ];

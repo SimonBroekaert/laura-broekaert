@@ -31,7 +31,7 @@ class PredefinedPlan extends Resource
      *
      * @var string
      */
-    public static $group = 'General';
+    public static $group = 'Plans';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

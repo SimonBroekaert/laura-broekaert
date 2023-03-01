@@ -16,6 +16,7 @@
         "laravel/nova": "~4.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "livewire/livewire": "^2.12",
         "manogi/nova-tiptap": "^3.2",
         "outl1ne/nova-settings": "^5.0",
         "outl1ne/nova-sortable": "^3.4",

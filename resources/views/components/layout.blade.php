@@ -38,6 +38,7 @@
 	<meta name="msapplication-config" content="{{ asset('favicon/browserconfig.xml') }}">
 	<meta name="theme-color" content="#f1f5f9">
 	{{-- Assets --}}
+	@livewireStyles
 	@vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -53,6 +54,8 @@
 		</main>
 		<x-layout.footer />
 	</div>
+
+	@livewireScripts
 </body>
 
 </html>

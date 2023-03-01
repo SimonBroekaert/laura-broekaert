@@ -2,18 +2,18 @@
 
 namespace App\Nova;
 
+use App\Nova\Flexible\Layouts\PlanBundle;
 use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestampFields;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Manogi\Tiptap\Tiptap;
 use Outl1ne\NovaSortable\Traits\HasSortableRows;
+use Whitecube\NovaFlexibleContent\Flexible;
 
-class PlanType extends Resource
+class PredefinedPlan extends Resource
 {
     use HasDeveloperFields;
     use HasSortableRows;
@@ -22,16 +22,16 @@ class PlanType extends Resource
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\PlanType>
+     * @var class-string<\App\Models\PredefinedPlan>
      */
-    public static $model = \App\Models\PlanType::class;
+    public static $model = \App\Models\PredefinedPlan::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Plans';
+    public static $group = 'General';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -66,27 +66,31 @@ class PlanType extends Resource
                 ->onlyOnDetail(),
 
             Text::make('Name', 'name')
-                ->rules('required', 'max:255', 'unique:plan_types,name,{{resourceId}}')
+                ->rules('required', 'max:255')
                 ->sortable(),
 
             Text::make('Slug', 'slug')
-                ->rules('required', 'max:255', 'unique:plan_types,slug,{{resourceId}}')
+                ->rules('required', 'max:255')
                 ->onlyOnDetail(),
 
-            BelongsTo::make('Location', 'location', Location::class)
+            Flexible::make('Bundles', 'bundles')
                 ->nullable()
-                ->sortable(),
+                ->addLayout(PlanBundle::class)
+                ->button('Add Bundle'),
 
-            Number::make('Amount of persons', 'amount_of_persons')
-                ->rules('required', 'integer', 'min:1')
-                ->sortable(),
+            Tiptap::make('Description', 'description')
+                ->rules('nullable', 'max:255')
+                ->buttons([
+                    'bold',
+                    'italic',
+                    'underline',
+                    'strike',
+                ]),
 
             Boolean::make('Online', 'is_online')
                 ->default(true)
                 ->sortable()
                 ->filterable(),
-
-            HasMany::make('Plans', 'plans', Plan::class),
 
             ...$this->timestampFields(),
             ...$this->developerFields(),

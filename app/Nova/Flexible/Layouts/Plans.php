@@ -2,8 +2,7 @@
 
 namespace App\Nova\Flexible\Layouts;
 
-use App\Models\PlanType as ModelsPlanType;
-use Laravel\Nova\Fields\Boolean;
+use App\Models\PredefinedPlan;
 use Laravel\Nova\Fields\MultiSelect;
 use Laravel\Nova\Fields\Text;
 use Manogi\Tiptap\Tiptap;
@@ -36,8 +35,8 @@ class Plans extends Layout
             Text::make('Title', 'title')
                 ->rules('nullable', 'max:255'),
 
-            MultiSelect::make('Plan Types', 'plan_types')
-                ->options(ModelsPlanType::all()->pluck('name', 'id'))
+            MultiSelect::make('Plans', 'predefinedPlans')
+                ->options(PredefinedPlan::all()->pluck('name', 'id'))
                 ->displayUsingLabels()
                 ->rules('required', 'min:1'),
 
@@ -57,9 +56,6 @@ class Plans extends Layout
                 ->linkSettings([
                     'withFileUpload' => false,
                 ]),
-
-            Boolean::make('Show custom', 'show_custom')
-                ->default(false),
         ];
     }
 }

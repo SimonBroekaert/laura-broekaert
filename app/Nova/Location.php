@@ -4,7 +4,6 @@ namespace App\Nova;
 
 use App\Nova\Traits\HasDeveloperFields;
 use App\Nova\Traits\HasTimestampFields;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -26,7 +25,7 @@ class Location extends Resource
      *
      * @var string
      */
-    public static $group = 'Plans';
+    public static $group = 'General';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -90,8 +89,6 @@ class Location extends Resource
 
             Text::make('Address', fn () => $this->address->full)
                 ->onlyOnIndex(),
-
-            HasMany::make('Plan Types', 'planTypes', PlanType::class),
 
             ...$this->timestampFields(),
             ...$this->developerFields(),

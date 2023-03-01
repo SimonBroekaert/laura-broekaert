@@ -22,7 +22,7 @@ it('has an attribute to check if the user is an admin', function (User $user, bo
 ]);
 
 it('has an attribute to check if the user is a developer', function (User $user, bool $expected) {
-    test()->assertEquals($expected, $user->is_developer);
+    test()->assertEquals($expected, $user?->is_developer);
 })->with([
     [fn () => User::factory()->admin()->create(), false],
     [fn () => User::factory()->developer()->create(), true],

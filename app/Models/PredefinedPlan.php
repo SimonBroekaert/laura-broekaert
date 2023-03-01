@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
+use App\Casts\FlexibleCast;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class PlanType extends Model implements Sortable
+class PredefinedPlan extends Model implements Sortable
 {
     use HasFactory;
     use HasSlug;
@@ -26,6 +25,7 @@ class PlanType extends Model implements Sortable
     public $sortable = [
         'order_column_name' => 'order',
         'sort_when_creating' => true,
+        'sort_on_has_many' => true,
     ];
 
     /**
@@ -37,7 +37,8 @@ class PlanType extends Model implements Sortable
         'developer_id',
         'name',
         'slug',
-        'amount_of_persons',
+        'bundles',
+        'description',
         'is_online',
         'order',
     ];
@@ -48,7 +49,7 @@ class PlanType extends Model implements Sortable
      * @var array<string, string>
      */
     protected $casts = [
-        'amount_of_persons' => 'integer',
+        'bundles' => FlexibleCast::class,
         'is_online' => 'boolean',
     ];
 
@@ -72,25 +73,5 @@ class PlanType extends Model implements Sortable
     public function scopeOnline($query): Builder
     {
         return $query->where('is_online', true);
-    }
-
-    /**
-     * Relation: location.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function location(): BelongsTo
-    {
-        return $this->belongsTo(Location::class);
-    }
-
-    /**
-     * Relation: plans.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function plans(): HasMany
-    {
-        return $this->hasMany(Plan::class);
     }
 }

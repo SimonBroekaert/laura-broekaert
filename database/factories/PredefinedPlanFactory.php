@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PlanType>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PredefinedPlan>
  */
-class PlanTypeFactory extends Factory
+class PredefinedPlanFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,22 +23,8 @@ class PlanTypeFactory extends Factory
             'developer_id' => fake()->unique()->word(),
             'name' => $name,
             'slug' => Str::slug($name),
-            'amount_of_persons' => fake()->numberBetween(1, 3),
+            'description' => fake()->text(100),
             'is_online' => fake()->boolean(),
         ];
-    }
-
-    /**
-     * Indicate that the plan type is online.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function online()
-    {
-        return $this->state(function () {
-            return [
-                'is_online' => true,
-            ];
-        });
     }
 }

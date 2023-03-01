@@ -57,7 +57,7 @@ class Menu extends Resource
      */
     public static function authorizedToCreate(Request $request)
     {
-        return auth()->user()->is_developer;
+        return auth()->user()?->is_developer;
     }
 
     /**
@@ -69,7 +69,7 @@ class Menu extends Resource
      */
     public function authorizedToUpdate(Request $request)
     {
-        return auth()->user()->is_developer;
+        return auth()->user()?->is_developer;
     }
 
     /**
@@ -81,7 +81,7 @@ class Menu extends Resource
      */
     public function authorizedToDelete(Request $request)
     {
-        return auth()->user()->is_developer;
+        return auth()->user()?->is_developer;
     }
 
     /**

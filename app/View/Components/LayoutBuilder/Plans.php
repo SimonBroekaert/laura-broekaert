@@ -2,7 +2,7 @@
 
 namespace App\View\Components\LayoutBuilder;
 
-use App\Models\PlanType;
+use App\Models\PredefinedPlan;
 use Illuminate\View\Component;
 
 class Plans extends Component
@@ -23,11 +23,10 @@ class Plans extends Component
      */
     public function render()
     {
-        $planTypes = PlanType::whereIn('id', $this->block->plan_types ?? [])
+        $predefinedPlans = PredefinedPlan::whereIn('id', $this->block->predefinedPlans ?? [])
             ->ordered()
-            ->with('plans')
             ->get();
 
-        return view('components.layout-builder.plans', compact('planTypes'));
+        return view('components.layout-builder.plans', compact('predefinedPlans'));
     }
 }

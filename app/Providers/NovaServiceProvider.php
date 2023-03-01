@@ -45,7 +45,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             (new LogsTool())
                 ->canSee(function ($request) {
-                    return $request->user()->is_developer;
+                    return $request->user()?->is_developer;
                 }),
             new NovaSettings(),
         ];

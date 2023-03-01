@@ -6,7 +6,7 @@
 	]);
 @endphp
 
-@if ($planTypes->isNotEmpty())
+@if ($predefinedPlans->isNotEmpty())
 	<section {{ $attributes }}>
 		<div class="container">
 			<div class="row">
@@ -22,48 +22,39 @@
 						@php
 							$liClasses = 'col-12 lg:col-6 2xl:col-4';
 						@endphp
-						@foreach ($planTypes as $planType)
+						@foreach ($predefinedPlans as $predefinedPlan)
 							<li class="{{ $liClasses }}" data-scroll-list-item>
 								<a href="#"
 									class="block h-full p-20 transition-all bg-white border rounded shadow border-gray betterhover:hover:shadow-lg">
 									<x-heading :level="3" class="mb-10 text-primary">
-										{{ $planType->name }}
+										{{ $predefinedPlan->name }}
 									</x-heading>
-									<ul>
-										@foreach ($planType->plans as $plan)
-											<li class="mb-10">
-												<div class="flex items-center justify-between">
-													<x-heading :level="4" class="mb-5 font-bold text-gray-dark">
-														{{ $plan->name }}
-													</x-heading>
-													<strong class="ml-5 font-bold text-gray-dark">
-														€ {{ $plan->total_price }}
-													</strong>
-												</div>
-												<div class="tiptap tiptap-compact">
-													{!! $plan->description !!}
-												</div>
-											</li>
-										@endforeach
-									</ul>
+									@if ($predefinedPlan->description)
+										<div class="tiptap">
+											{!! $predefinedPlan->description !!}
+										</div>
+									@else
+										<ul>
+											@foreach ($predefinedPlan->bundles as $bundle)
+												<li class="mb-10">
+													<div class="flex items-center justify-between">
+														<x-heading :level="4" class="mb-5 font-bold text-gray-dark">
+															{{ $bundle->name }}
+														</x-heading>
+														<strong class="ml-5 font-bold text-gray-dark">
+															€ {{ $bundle->price }}
+														</strong>
+													</div>
+													<div class="tiptap tiptap-compact">
+														{!! $bundle->description !!}
+													</div>
+												</li>
+											@endforeach
+										</ul>
+									@endif
 								</a>
 							</li>
 						@endforeach
-						@if ($block->show_custom)
-							<li class="{{ $liClasses }}" data-scroll-list-item>
-								<a href="#"
-									class="block h-full p-20 transition-all bg-white border rounded shadow border-gray betterhover:hover:shadow-lg">
-									<x-heading :level="3" class="mb-10 text-primary">
-										Plan op maat
-									</x-heading>
-									<div class="tiptap">
-										<p>Bent u niet zeker welk plan het beste bij u past?</p>
-										<p>Wil u een plan op maat voor uw organisatie/bedrijf?</p>
-										<p class="font-bold underline text-primary">Neem contact op met Laura</p>
-									</div>
-								</a>
-							</li>
-						@endif
 					</ul>
 				</div>
 				<div class="col-12 mt-30">

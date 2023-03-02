@@ -1,6 +1,6 @@
 @php
 	$attributes = $attributes->merge([
-	    'class' => 'py-10 px-30 rounded rfs:text-lg border border-gray w-full focus:border-primary focus:outline-primary transition-all outline-primary resize-none',
+	    'class' => 'py-10 px-30 rounded-sm rfs:text-lg border border-gray w-full bg-white focus:border-primary focus:outline-primary transition-all outline-primary resize-none',
 	    'rows' => '5',
 	]);
 @endphp

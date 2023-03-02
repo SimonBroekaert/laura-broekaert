@@ -52,6 +52,10 @@
 				<x-form.textarea id="message" wire:model="message" autocomplete="off" />
 				<x-form.error key="message" />
 			</x-form.group>
+			<x-form.group>
+				<x-form.gdpr key="gdprConsent" :privacy-page="$privacyPage" />
+				<x-form.error key="gdprConsent" />
+			</x-form.group>
 			<x-form.group class="flex items-center justify-end gap-gap">
 				<x-form.button type="submit" label="Verzenden" />
 			</x-form.group>

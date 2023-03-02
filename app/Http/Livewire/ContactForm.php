@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\PredefinedPage;
 use App\Models\ContactFormEntry;
+use App\Models\Page;
 use Livewire\Component;
 use Spatie\Honeypot\Http\Livewire\Concerns\HoneypotData;
 use Spatie\Honeypot\Http\Livewire\Concerns\UsesSpamProtection;
@@ -17,14 +19,17 @@ class ContactForm extends Component
     public $phone;
     public $subject;
     public $message;
+    public $gdprConsent;
 
     public $isSubmitted = false;
-
     public HoneypotData $extraFields;
+    public Page|null $privacyPage;
 
     public function mount()
     {
         $this->extraFields = new HoneypotData();
+        $this->privacyPage = Page::where('developer_id', PredefinedPage::PAGE_PRIVACY)
+            ->first();
     }
 
     public function submit()
@@ -38,6 +43,7 @@ class ContactForm extends Component
             'phone' => 'nullable',
             'subject' => 'required',
             'message' => 'required',
+            'gdprConsent' => 'required|accepted',
         ], [
             'firstName.required' => 'Vul je voornaam in',
             'lastName.required' => 'Vul je achternaam in',
@@ -45,6 +51,7 @@ class ContactForm extends Component
             'email.email' => 'Vul een geldig e-mailadres in',
             'subject.required' => 'Onderwerp is verplicht in te vullen',
             'message.required' => 'Bericht is verplicht in te vullen',
+            'gdprConsent.required' => 'Je moet akkoord gaan met de privacyverklaring',
         ]);
 
         $this->save();

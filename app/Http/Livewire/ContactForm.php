@@ -4,9 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\ContactFormEntry;
 use Livewire\Component;
+use Spatie\Honeypot\Http\Livewire\Concerns\HoneypotData;
+use Spatie\Honeypot\Http\Livewire\Concerns\UsesSpamProtection;
 
 class ContactForm extends Component
 {
+    use UsesSpamProtection;
+
     public $firstName;
     public $lastName;
     public $email;
@@ -16,8 +20,17 @@ class ContactForm extends Component
 
     public $isSubmitted = false;
 
+    public HoneypotData $extraFields;
+
+    public function mount()
+    {
+        $this->extraFields = new HoneypotData();
+    }
+
     public function submit()
     {
+        $this->protectAgainstSpam();
+
         $this->validate([
             'firstName' => 'required',
             'lastName' => 'required',

@@ -23,6 +23,7 @@
         "simonbroekaert/link-picker": "dev-master",
         "simonbroekaert/youtube": "dev-master",
         "spatie/eloquent-sortable": "^4.0",
+        "spatie/laravel-honeypot": "^4.3",
         "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-sluggable": "^3.4",
         "stechstudio/laravel-php-cs-fixer": "^3.0",

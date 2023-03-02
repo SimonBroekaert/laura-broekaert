@@ -1,12 +1,5 @@
 # TODO's
 
-- [ ] Finish Contact Form
-  - [ ] Add GDPR checkbox
-  - [ ] Add Privacy Policy Predefined Page
-  - [ ] Make it possible to write email text
-  - [ ] Send email to admin
-  - [ ] Send email to user
-  - [ ] Make mails look nice
 - [ ] Create Client Business
   - [ ] Create Model
   - [ ] Create Migration

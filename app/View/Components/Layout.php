@@ -52,7 +52,7 @@ class Layout extends Component
     {
         return collect([
             $this->title ?? $this->seo?->title,
-            setting('seo.title_suffix', Str::headline(config('app.name'))),
+            setting('seo_title_suffix', Str::headline(config('app.name'))),
         ])->filter()->implode(' | ');
     }
 

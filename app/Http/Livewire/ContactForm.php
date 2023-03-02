@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Enums\PredefinedPage;
+use App\Jobs\SendContactAdminMail;
+use App\Jobs\SendContactClientMail;
 use App\Models\ContactFormEntry;
 use App\Models\Page;
 use Livewire\Component;
@@ -24,6 +26,7 @@ class ContactForm extends Component
     public $isSubmitted = false;
     public HoneypotData $extraFields;
     public Page|null $privacyPage;
+    public ?ContactFormEntry $entry = null;
 
     public function mount()
     {
@@ -55,13 +58,18 @@ class ContactForm extends Component
         ]);
 
         $this->save();
+
+        // Send mails
+        SendContactAdminMail::dispatch($this->entry);
+        SendContactClientMail::dispatch($this->entry);
+
         // Mark the form as submitted
         $this->isSubmitted = true;
     }
 
     public function save()
     {
-        ContactFormEntry::create([
+        $this->entry = ContactFormEntry::create([
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
             'email' => $this->email,

@@ -6,6 +6,7 @@ use App\Enums\PredefinedMenu;
 use App\Enums\PredefinedPage;
 use App\Models\Client;
 use App\Models\ClientBusiness;
+use App\Models\ContactFormEntry;
 use App\Models\Menu;
 use App\Models\Page;
 use App\Models\PredefinedPlan;
@@ -67,6 +68,11 @@ class DatabaseSeeder extends Seeder
                         'developer_id' => $case,
                     ]);
             });
+
+        // Create Contact Form Entries
+        $contactFormEntries = ContactFormEntry::factory()
+            ->count(10)
+            ->create();
 
         // Create Clients
         $clients = Client::factory()

@@ -1,12 +1,5 @@
 # TODO's
 
-- [ ] Create Client
-  - [ ] Create Model
-  - [ ] Create Migration
-  - [ ] Create Factory
-  - [ ] Create Nova Resource
-  - [ ] Make action to create client from contact form entry
-  - [ ] Link to Client Business as belongsTo
 - [ ] Create Interest Form
   - [ ] Create Livewire Component
   - [ ] Save entries as Clients (with status "interested")
@@ -47,4 +40,5 @@
   - [ ] Link to Client as morphTo
   - [ ] Link to Plan as morphTo
   - [ ] Link to ClientStat as morphTo
+- [ ] Reply to action
 - [ ] Test everything

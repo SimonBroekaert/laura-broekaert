@@ -58,7 +58,9 @@ class User extends Resource
             Select::make('Type', 'type')
                 ->rules('required')
                 ->options(UserType::labels())
-                ->displayUsingLabels(),
+                ->displayUsingLabels()
+                ->filterable()
+                ->sortable(),
 
             Text::make('Name')
                 ->sortable()

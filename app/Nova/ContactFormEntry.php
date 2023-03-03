@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\CreateClientFromContactFormEntry;
 use App\Nova\Traits\HasTimestampFields;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -70,12 +71,17 @@ class ContactFormEntry extends Resource
                 ->onlyOnDetail(),
 
             Text::make('First Name', 'first_name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
 
             Text::make('Last Name', 'last_name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
+
+            Text::make('Full Name', 'full_name')
+                ->readonly()
+                ->onlyOnIndex()
+                ->sortable(),
 
             Text::make('Email', 'email')
                 ->sortable()
@@ -86,7 +92,8 @@ class ContactFormEntry extends Resource
                 ->hideFromIndex(),
 
             Text::make('Subject', 'subject')
-                ->rules('required', 'max:255'),
+                ->rules('required', 'max:255')
+                ->sortable(),
 
             Textarea::make('Message', 'message')
                 ->rules('required', 'max:255')
@@ -137,6 +144,8 @@ class ContactFormEntry extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            CreateClientFromContactFormEntry::make(),
+        ];
     }
 }

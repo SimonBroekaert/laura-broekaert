@@ -6,6 +6,7 @@ use App\Enums\ClientStatus;
 use App\Nova\Traits\HasTimestampFields;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -65,7 +66,8 @@ class Client extends Resource
                 ->options(ClientStatus::labels())
                 ->displayUsingLabels()
                 ->default(ClientStatus::STATUS_ACTIVE)
-                ->onlyOnForms(),
+                ->onlyOnForms()
+                ->filterable(),
 
             Badge::make('Status', 'status')
                 ->labels(ClientStatus::labels())
@@ -82,8 +84,9 @@ class Client extends Resource
                 ->hideFromIndex(),
 
             Text::make('Full Name', 'full_name')
-                ->rules('required', 'max:255')
-                ->onlyOnIndex(),
+                ->readonly()
+                ->onlyOnIndex()
+                ->sortable(),
 
             Text::make('Email', 'email')
                 ->rules('required', 'email', 'max:255', 'unique:clients,email,{{resourceId}}')
@@ -92,6 +95,12 @@ class Client extends Resource
             Text::make('Phone', 'phone')
                 ->rules('nullable', 'max:255', 'unique:clients,phone,{{resourceId}}')
                 ->sortable(),
+
+            BelongsTo::make('Business', 'business', ClientBusiness::class)
+                ->nullable()
+                ->hideFromIndex()
+                ->filterable()
+                ->showCreateRelationButton(),
 
             ...$this->timestampFields(),
         ];

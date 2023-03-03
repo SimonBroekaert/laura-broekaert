@@ -1,10 +1,5 @@
 # TODO's
 
-- [ ] Create Client Business
-  - [ ] Create Model
-  - [ ] Create Migration
-  - [ ] Create Factory
-  - [ ] Create Nova Resource
 - [ ] Create Client
   - [ ] Create Model
   - [ ] Create Migration

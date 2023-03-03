@@ -1,5 +1,12 @@
 <?php
 
+if (! function_exists('novaBadgeColor')) {
+    function novaBadgeColor(string $color): string
+    {
+        return "bg-{$color}-100 text-{$color}-600 dark:bg-{$color}-500 dark:text-{$color}-900";
+    }
+}
+
 if (! function_exists('isOdd')) {
     /**
      * Check if a number is odd.

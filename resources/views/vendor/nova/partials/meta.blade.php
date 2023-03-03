@@ -8,3 +8,5 @@
 <meta name="msapplication-TileColor" content="#f1f5f9">
 <meta name="msapplication-config" content="{{ asset('favicon/browserconfig.xml') }}">
 <meta name="theme-color" content="#f1f5f9">
+{{-- Style --}}
+@vite(['resources/css/nova-tailwind-colors.css'])

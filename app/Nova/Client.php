@@ -2,36 +2,39 @@
 
 namespace App\Nova;
 
-use App\Enums\UserType;
-use Illuminate\Validation\Rules\Password as RulesPassword;
+use App\Enums\ClientStatus;
+use App\Nova\Traits\HasTimestampFields;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class User extends Resource
+class Client extends Resource
 {
+    use HasTimestampFields;
+
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\User>
+     * @var class-string<\App\Models\Client>
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Client::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Administration';
+    public static $group = 'Clients';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'full_name';
 
     /**
      * The columns that should be searched.
@@ -39,14 +42,16 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'full_name',
+        'email',
+        'phone',
     ];
 
     /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -55,23 +60,40 @@ class User extends Resource
             ID::make()
                 ->onlyOnDetail(),
 
-            Select::make('Type', 'type')
+            Select::make('Status', 'status')
                 ->rules('required')
-                ->options(UserType::labels())
-                ->displayUsingLabels(),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:255', 'unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->creationRules('required', RulesPassword::defaults())
-                ->updateRules('nullable', RulesPassword::defaults())
+                ->options(ClientStatus::labels())
+                ->displayUsingLabels()
+                ->default(ClientStatus::STATUS_ACTIVE)
                 ->onlyOnForms(),
+
+            Badge::make('Status', 'status')
+                ->labels(ClientStatus::labels())
+                ->types(ClientStatus::badges())
+                ->sortable()
+                ->exceptOnForms(),
+
+            Text::make('First Name', 'first_name')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
+
+            Text::make('Last Name', 'last_name')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
+
+            Text::make('Full Name', 'full_name')
+                ->rules('required', 'max:255')
+                ->onlyOnIndex(),
+
+            Text::make('Email', 'email')
+                ->rules('required', 'email', 'max:255', 'unique:clients,email,{{resourceId}}')
+                ->sortable(),
+
+            Text::make('Phone', 'phone')
+                ->rules('nullable', 'max:255', 'unique:clients,phone,{{resourceId}}')
+                ->sortable(),
+
+            ...$this->timestampFields(),
         ];
     }
 
@@ -79,7 +101,6 @@ class User extends Resource
      * Get the cards available for the request.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -91,7 +112,6 @@ class User extends Resource
      * Get the filters available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -103,7 +123,6 @@ class User extends Resource
      * Get the lenses available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -115,7 +134,6 @@ class User extends Resource
      * Get the actions available for the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     *
      * @return array
      */
     public function actions(NovaRequest $request)

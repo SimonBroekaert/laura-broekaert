@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Enums\PredefinedMenu;
 use App\Enums\PredefinedPage;
+use App\Models\Client;
 use App\Models\ClientBusiness;
 use App\Models\Menu;
 use App\Models\Page;
+use App\Models\PredefinedPlan;
 use App\Models\User;
 use App\Nova\Flexible\Presets\DefaultPreset;
 use App\Nova\Flexible\Presets\HomePreset;
@@ -38,6 +40,11 @@ class DatabaseSeeder extends Seeder
                 'email' => 'laurabroekaert@gmail.com',
             ]);
 
+        // Create Predefined Plans
+        $predefinedPlans = PredefinedPlan::factory()
+            ->count(5)
+            ->create();
+
         // Create Pages from Predefined pages
         $predefinedPages = collect(PredefinedPage::values())
             ->map(function ($case) {
@@ -61,9 +68,21 @@ class DatabaseSeeder extends Seeder
                     ]);
             });
 
-        // Create Client Businesses
-        ClientBusiness::factory()
-            ->count(5)
+        // Create Clients
+        $clients = Client::factory()
+            ->count((10))
             ->create();
+
+        // Link some Clients to Client Businesses
+        $clients->shuffle()->take(2)->each(function (Client $client) {
+            $client->client_business_id = ClientBusiness::factory()->create()->id;
+            $client->save();
+        });
+
+        // Link some Clients to Predefined Plans
+        $clients->shuffle()->take(count($clients) / 3 * 2)->each(function (Client $client) use ($predefinedPlans) {
+            $client->predefined_plan_id = $predefinedPlans->random()->id;
+            $client->save();
+        });
     }
 }

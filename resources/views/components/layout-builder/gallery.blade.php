@@ -16,14 +16,17 @@
 			</div>
 		</div>
 		<div class="row">
-			@foreach ($block->images as $image)
+			@forelse ($block->images as $image)
 				<div class="col-12 sm:col-6 lg:col-4 xxl:col-3">
-					<div class="relative w-full aspect-4/3 mb-gap" data-aos="zoom-in">
-						<x-image :image="$image" format="gallery"
-							class="absolute w-full h-full overflow-hidden transition-all rounded shadow select-none bg-gray" />
+					<div class="relative w-full aspect-4/3 mb-gap bg-gray rounded shadow overflow-hidden" data-aos="zoom-in">
+						<x-image :image="$image" format="gallery" class="absolute w-full h-full transition-all select-none bg-gray" />
 					</div>
 				</div>
-			@endforeach
+			@empty
+				<div class="col-12">
+					<p class="text-gray-dark">Hier zijn nog geen afbeeldingen te vinden. Neem later opnieuw een kijkje!</p>
+				</div>
+			@endforelse
 		</div>
 	</div>
 </section>

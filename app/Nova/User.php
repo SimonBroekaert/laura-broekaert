@@ -53,7 +53,6 @@ class User extends Resource
     {
         return [
             ID::make()
-                ->sortable()
                 ->onlyOnDetail(),
 
             Select::make('Type', 'type')

@@ -76,7 +76,6 @@ class Page extends Resource
     {
         return [
             ID::make()
-                ->sortable()
                 ->onlyOnDetail(),
 
             Text::make('Title', 'title')

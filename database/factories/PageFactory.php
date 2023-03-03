@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Nova\Flexible\Presets\DefaultPreset;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -23,7 +24,7 @@ class PageFactory extends Factory
             'developer_id' => fake()->unique()->word(),
             'title' => $title,
             'slug' => Str::slug($title),
-            'body' => null,
+            'body' => DefaultPreset::fake(),
             'is_online' => fake()->boolean(),
         ];
     }

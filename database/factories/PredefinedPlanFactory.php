@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Nova\Flexible\Layouts\PlanBundle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -23,6 +24,7 @@ class PredefinedPlanFactory extends Factory
             'developer_id' => fake()->unique()->word(),
             'name' => $name,
             'slug' => Str::slug($name),
+            'bundles' => PlanBundle::fake(3),
             'description' => fake()->text(100),
             'is_online' => fake()->boolean(),
         ];

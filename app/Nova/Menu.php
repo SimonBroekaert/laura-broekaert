@@ -95,7 +95,6 @@ class Menu extends Resource
     {
         return [
             ID::make()
-                ->sortable()
                 ->onlyOnDetail(),
 
             Text::make('Name', 'name')

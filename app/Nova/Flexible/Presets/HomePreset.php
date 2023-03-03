@@ -2,6 +2,7 @@
 
 namespace App\Nova\Flexible\Presets;
 
+use App\Nova\Flexible\Layouts\Traits\Fakable;
 use App\Nova\Flexible\Layouts\Article;
 use App\Nova\Flexible\Layouts\ArticleWithMedia;
 use App\Nova\Flexible\Layouts\Form;
@@ -34,5 +35,42 @@ class HomePreset extends Preset
         $field->addLayout(Quote::class);
         $field->addLayout(Video::class);
         $field->addLayout(Form::class);
+    }
+
+    public static function fake(?int $amountOfBlocks = null, $asJsonString = true): array|string
+    {
+        if ($amountOfBlocks === null) {
+            $amountOfBlocks = fake()->numberBetween(1, 10);
+        }
+
+        $blocks = [];
+
+        if ($amountOfBlocks === 0) {
+            return $blocks;
+        }
+
+        $blocks[] = HomeHero::fake(asJsonString: false);
+
+        for ($i = 0; $i < $amountOfBlocks; $i++) {
+            $blocks[] = fake()->randomElement([
+                Article::fake(asJsonString: false),
+                Article::fake(asJsonString: false),
+                ArticleWithMedia::fake(asJsonString: false),
+                ArticleWithMedia::fake(asJsonString: false),
+                ArticleWithMedia::fake(asJsonString: false),
+                ArticleWithMedia::fake(asJsonString: false),
+                Highlight::fake(asJsonString: false),
+                Highlight::fake(asJsonString: false),
+                Gallery::fake(asJsonString: false),
+                Images::fake(asJsonString: false),
+                Plans::fake(asJsonString: false),
+                Quote::fake(asJsonString: false),
+                Quote::fake(asJsonString: false),
+                Video::fake(asJsonString: false),
+                Form::fake(asJsonString: false),
+            ]);
+        }
+
+        return $asJsonString ? json_encode($blocks) : $blocks;
     }
 }

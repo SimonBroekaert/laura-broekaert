@@ -75,7 +75,6 @@ class MenuItem extends Resource
     {
         return [
             ID::make()
-                ->sortable()
                 ->onlyOnDetail(),
 
             BelongsTo::make('Menu', 'menu', Menu::class)

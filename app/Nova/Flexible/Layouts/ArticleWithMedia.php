@@ -2,6 +2,7 @@
 
 namespace App\Nova\Flexible\Layouts;
 
+use App\Nova\Flexible\Layouts\Traits\Fakable;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Nova\Fields\Heading;
@@ -14,6 +15,7 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
 
 class ArticleWithMedia extends Layout implements HasMedia
 {
+    use Fakable;
     use HasMediaLibrary;
 
     /**
@@ -130,5 +132,18 @@ class ArticleWithMedia extends Layout implements HasMedia
         return Attribute::make(
             get: fn () => $this->getMedia(self::MEDIA_COLLECTION),
         );
+    }
+
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            'body' => fake()->paragraph(),
+            'button_1' => linkPicker()->fake(),
+            'button_1_text' => fake()->word(),
+            'button_2' => linkPicker()->fake(),
+            'button_2_text' => fake()->word(),
+            self::MEDIA_COLLECTION => [],
+        ];
     }
 }

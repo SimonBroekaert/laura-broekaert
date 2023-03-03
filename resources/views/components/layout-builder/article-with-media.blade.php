@@ -40,12 +40,12 @@
 			</div>
 			<div class="mt-40 col-12 lg:col-6 xl:col-5" data-carousel
 				data-aos="{{ isEven($block->data_type_index) ? 'fade-left' : 'fade-right' }}">
-				<div class="relative w-full aspect-4/3">
+				<div class="relative w-full aspect-4/3 bg-gray rounded shadow overflow-hidden">
 					@foreach ($block->images as $image)
 						<x-image :image="$image" format="article-with-media" data-carousel-item
 							data-toggle-classes="invisible opacity-0" data-active="{{ $loop->first ? 'true' : 'false' }}"
 							@class([
-								'absolute overflow-hidden transition-all rounded shadow select-none w-full h-full bg-gray',
+								'absolute transition-all select-none w-full h-full bg-gray',
 								'invisible opacity-0' => !$loop->first,
 							]) />
 					@endforeach

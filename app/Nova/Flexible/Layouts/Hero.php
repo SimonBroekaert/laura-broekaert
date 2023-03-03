@@ -2,6 +2,7 @@
 
 namespace App\Nova\Flexible\Layouts;
 
+use App\Nova\Flexible\Layouts\Traits\Fakable;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Nova\Fields\Text;
@@ -11,6 +12,7 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
 
 class Hero extends Layout implements HasMedia
 {
+    use Fakable;
     use HasMediaLibrary;
 
     protected const MEDIA_COLLECTION = 'hero_image';
@@ -69,5 +71,13 @@ class Hero extends Layout implements HasMedia
         return Attribute::make(
             get: fn () => $this->getFirstMedia(self::MEDIA_COLLECTION),
         );
+    }
+
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            self::MEDIA_COLLECTION => [],
+        ];
     }
 }

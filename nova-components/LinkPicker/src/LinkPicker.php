@@ -182,4 +182,45 @@ class LinkPicker
             ->sortBy('name')
             ->toArray();
     }
+
+    public static function fake(int $count = 1, $asJsonString = true): array|string
+    {
+        $data = collect(range(1, $count))
+            ->map(function () {
+                $data = [
+                    'route' => collect(['external.link', 'external.mailto', 'external.tel'])->random(),
+                    'parameters' => [],
+                ];
+
+                if ($data['route'] === 'external.link') {
+                    $data['parameters'][] = [
+                        'name' => 'url',
+                        'value' => fake()->url(),
+                    ];
+                }
+
+                if ($data['route'] === 'external.mailto') {
+                    $data['parameters'][] = [
+                        'name' => 'email',
+                        'value' => fake()->email(),
+                    ];
+                }
+
+                if ($data['route'] === 'external.tel') {
+                    $data['parameters'][] = [
+                        'name' => 'phone',
+                        'value' => fake()->phoneNumber(),
+                    ];
+                }
+
+                return $data;
+            })
+            ->toArray();
+
+        if ($count === 1) {
+            $data = $data[0];
+        }
+
+        return $asJsonString ? json_encode($data) : $data;
+    }
 }

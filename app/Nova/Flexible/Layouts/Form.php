@@ -3,6 +3,7 @@
 namespace App\Nova\Flexible\Layouts;
 
 use App\Enums\PredefinedForm;
+use App\Nova\Flexible\Layouts\Traits\Fakable;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Manogi\Tiptap\Tiptap;
@@ -10,6 +11,8 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
 
 class Form extends Layout
 {
+    use Fakable;
+
     /**
      * The layout's unique identifier
      *
@@ -55,6 +58,15 @@ class Form extends Layout
             Select::make('Form', 'form')
                 ->options(PredefinedForm::labels())
                 ->rules('required'),
+        ];
+    }
+
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            'intro' => fake()->paragraph(),
+            'form' => fake()->randomElement(PredefinedForm::cases()),
         ];
     }
 }

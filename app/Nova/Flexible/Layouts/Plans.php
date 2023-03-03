@@ -3,6 +3,7 @@
 namespace App\Nova\Flexible\Layouts;
 
 use App\Models\PredefinedPlan;
+use App\Nova\Flexible\Layouts\Traits\Fakable;
 use Laravel\Nova\Fields\MultiSelect;
 use Laravel\Nova\Fields\Text;
 use Manogi\Tiptap\Tiptap;
@@ -10,6 +11,8 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
 
 class Plans extends Layout
 {
+    use Fakable;
+
     /**
      * The layout's unique identifier
      *
@@ -56,6 +59,15 @@ class Plans extends Layout
                 ->linkSettings([
                     'withFileUpload' => false,
                 ]),
+        ];
+    }
+
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            'predefinedPlans' => PredefinedPlan::inRandomOrder()->pluck('id')->toArray(),
+            'note' => fake()->paragraph(),
         ];
     }
 }

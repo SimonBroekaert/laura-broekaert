@@ -2,6 +2,7 @@
 
 namespace App\Nova\Flexible\Layouts;
 
+use App\Nova\Flexible\Layouts\Traits\Fakable;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Manogi\Tiptap\Tiptap;
@@ -9,6 +10,8 @@ use Whitecube\NovaFlexibleContent\Layouts\Layout;
 
 class PlanBundle extends Layout
 {
+    use Fakable;
+
     /**
      * The layout's unique identifier
      *
@@ -49,6 +52,15 @@ class PlanBundle extends Layout
                     'underline',
                     'strike',
                 ]),
+        ];
+    }
+
+    public static function fakeDefinition(): array
+    {
+        return [
+            'name' => fake()->unique()->word(),
+            'price' => fake()->randomFloat(2, 0, 100),
+            'description' => fake()->text(100),
         ];
     }
 }

@@ -3,35 +3,37 @@
 namespace App\Nova;
 
 use App\Nova\Traits\HasTimestampFields;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
-class ContactFormEntry extends Resource
+class ClientBusiness extends Resource
 {
     use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\ContactFormEntry>
+     * @var class-string<\App\Models\ClientBusiness>
      */
-    public static $model = \App\Models\ContactFormEntry::class;
+    public static $model = \App\Models\ClientBusiness::class;
 
     /**
      * The logical group associated with the resource.
      *
      * @var string
      */
-    public static $group = 'Contact';
+    public static $group = 'Clients';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'full_name';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -40,11 +42,8 @@ class ContactFormEntry extends Resource
      */
     public static $search = [
         'id',
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'subject',
+        'name',
+        'tax_number',
     ];
 
     /**
@@ -54,7 +53,7 @@ class ContactFormEntry extends Resource
      */
     public static function label()
     {
-        return 'Form Entries';
+        return 'Businesses';
     }
 
     /**
@@ -69,26 +68,32 @@ class ContactFormEntry extends Resource
             ID::make()
                 ->onlyOnDetail(),
 
-            Text::make('First Name', 'first_name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Text::make('Name', 'name')
+                ->rules('required', 'max:255', 'unique:client_businesses,name,{{resourceId}}')
+                ->sortable(),
 
-            Text::make('Last Name', 'last_name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Text::make('Tax Number', 'tax_number')
+                ->rules('required', 'max:255', 'unique:client_businesses,tax_number,{{resourceId}}')
+                ->sortable(),
 
-            Text::make('Email', 'email')
-                ->sortable()
-                ->rules('required', 'max:255', 'email'),
+            Heading::make('Address'),
 
-            Text::make('Phone', 'phone')
+            Text::make('Address', 'address.full')
+                ->exceptOnForms(),
+
+            Text::make('Street', 'street')
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
 
-            Text::make('Subject', 'subject')
-                ->rules('required', 'max:255'),
+            Text::make('Street Number', 'street_number')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
 
-            Textarea::make('Message', 'message')
+            Text::make('Postal Code', 'postal_code')
+                ->rules('required', 'max:255')
+                ->hideFromIndex(),
+
+            Text::make('City', 'city')
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
 

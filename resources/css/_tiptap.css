@@ -51,6 +51,10 @@
         @apply mb-0;
     }
 
+    .tiptap.tiptap-with-background {
+        @apply text-white;
+    }
+
     .tiptap.tiptap-with-background h1,
     .tiptap.tiptap-with-background h2,
     .tiptap.tiptap-with-background h3,

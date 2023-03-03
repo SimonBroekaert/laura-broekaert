@@ -7,7 +7,9 @@
 @endphp
 
 <section {{ $attributes }}>
-	<x-image :image="$block->image" format="highlight" class="absolute inset-0 w-full h-full -z-1" />
+	<div class="bg-gray absolute inset-0 object-cover w-full h-full -z-1">
+		<x-image :image="$block->image" format="highlight" class="absolute inset-0 w-full h-full -z-1" />
+	</div>
 	<div class="container">
 		<div class="justify-center row">
 			<div class="col-12 lg:col-10 xl:col-8">

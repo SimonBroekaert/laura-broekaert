@@ -7,7 +7,9 @@
 @endphp
 
 <section {{ $attributes }}>
-	<x-image :image="$block->image" format="hero" class="absolute inset-0 object-cover w-full h-full -z-1" />
+	<div class="bg-gray absolute inset-0 object-cover w-full h-full -z-1">
+		<x-image :image="$block->image" format="hero" class="absolute inset-0 object-cover w-full h-full -z-1" />
+	</div>
 	<div class="container">
 		<div class="row">
 			<div class="col-12">

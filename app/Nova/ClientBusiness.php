@@ -4,11 +4,11 @@ namespace App\Nova;
 
 use App\Nova\Traits\HasTimestampFields;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Panel;
 
 class ClientBusiness extends Resource
 {
@@ -96,6 +96,8 @@ class ClientBusiness extends Resource
             Text::make('City', 'city')
                 ->rules('required', 'max:255')
                 ->hideFromIndex(),
+
+            HasMany::make('Clients', 'clients', Client::class),
 
             ...$this->timestampFields(),
         ];

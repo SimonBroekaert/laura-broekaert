@@ -29,6 +29,17 @@ enum PlanStatus: string
         };
     }
 
+    public function ClientStatus(): ClientStatus
+    {
+        return match ($this) {
+            self::STATUS_ACTIVE => ClientStatus::STATUS_ACTIVE,
+            self::STATUS_CANCELLED => ClientStatus::STATUS_CANCELLED,
+            self::STATUS_EXPIRED => ClientStatus::STATUS_ACTIVE,
+            self::STATUS_FINISHED => ClientStatus::STATUS_FINISHED,
+            self::STATUS_QUIT => ClientStatus::STATUS_QUIT,
+        };
+    }
+
     public function badge(): string
     {
         return match ($this) {

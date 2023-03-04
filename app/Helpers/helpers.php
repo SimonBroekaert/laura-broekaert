@@ -1,5 +1,6 @@
 <?php
 
+
 if (! function_exists('novaBadgeColor')) {
     function novaBadgeColor(string $color): string
     {
@@ -46,5 +47,20 @@ if (! function_exists('setting')) {
     function setting(string $key, $default = null)
     {
         return nova_get_setting($key, $default);
+    }
+}
+
+if (! function_exists('generateCode')) {
+    function generateCode(): string
+    {
+        $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        $charactersLength = strlen($characters);
+        $code = '';
+
+        for ($i = 0; $i < 6; $i++) {
+            $code .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $code;
     }
 }

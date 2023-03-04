@@ -1,11 +1,7 @@
 # TODO's
 
 - [ ] Create Plan
-  - [ ] Create Model
-  - [ ] Create Migration
-  - [ ] Create Factory
-  - [ ] Create Nova Resource
-  - [ ] Link to Client as belongsToMany
+  - [ ] Delete Plan when all client_plans are deleted
 - [ ] Create Session
   - [ ] Create Model
   - [ ] Create Migration

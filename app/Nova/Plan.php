@@ -2,26 +2,30 @@
 
 namespace App\Nova;
 
-use App\Enums\ClientStatus;
+use App\Enums\PlanStatus;
+use App\Nova\Traits\HasPriceFields;
 use App\Nova\Traits\HasTimestampFields;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Client extends Resource
+class Plan extends Resource
 {
+    use HasPriceFields;
     use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Client>
+     * @var class-string<\App\Models\Plan>
      */
-    public static $model = \App\Models\Client::class;
+    public static $model = \App\Models\Plan::class;
 
     /**
      * The logical group associated with the resource.
@@ -35,7 +39,7 @@ class Client extends Resource
      *
      * @var string
      */
-    public static $title = 'full_name';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -44,9 +48,7 @@ class Client extends Resource
      */
     public static $search = [
         'id',
-        'full_name',
-        'email',
-        'phone',
+        'code',
     ];
 
     /**
@@ -63,49 +65,69 @@ class Client extends Resource
 
             Select::make('Status', 'status')
                 ->rules('required')
-                ->options(ClientStatus::labels())
+                ->options(PlanStatus::labels())
                 ->displayUsingLabels()
-                ->default(ClientStatus::STATUS_ACTIVE)
+                ->default(PlanStatus::STATUS_ACTIVE)
                 ->onlyOnForms()
                 ->filterable(),
 
             Badge::make('Status', 'status')
-                ->labels(ClientStatus::labels())
-                ->types(ClientStatus::badges())
+                ->labels(PlanStatus::labels())
+                ->types(PlanStatus::badges())
                 ->sortable()
                 ->exceptOnForms(),
 
-            Text::make('First Name', 'first_name')
-                ->rules('required', 'max:255')
-                ->hideFromIndex(),
-
-            Text::make('Last Name', 'last_name')
-                ->rules('required', 'max:255')
-                ->hideFromIndex(),
-
-            Text::make('Full Name', 'full_name')
+            Text::make('Name', 'name')
+                ->sortable()
                 ->readonly()
-                ->onlyOnIndex()
-                ->sortable(),
+                ->exceptOnForms(),
 
-            Text::make('Email', 'email')
-                ->rules('required', 'email', 'max:255', 'unique:clients,email,{{resourceId}}')
-                ->sortable(),
+            Text::make('Code', 'code')
+                ->sortable()
+                ->readonly()
+                ->exceptOnForms(),
 
-            Text::make('Phone', 'phone')
-                ->rules('nullable', 'max:255', 'unique:clients,phone,{{resourceId}}')
-                ->sortable(),
+            Text::make('Clients', function () {
+                // Create a comma separated list of clients with a link to the client
+                return $this->clients->map(function ($client) {
+                    return "<a class=\"link-default\" href=\"/admin/resources/clients/{$client->id}\">{$client->full_name}</a>";
+                })->implode(',<br>');
+            })
+                ->asHtml()
+                ->onlyOnIndex(),
 
-            BelongsTo::make('Business', 'business', ClientBusiness::class)
+            Heading::make('Location'),
+
+            BelongsTo::make('Location')
                 ->nullable()
-                ->hideFromIndex()
-                ->filterable()
-                ->showCreateRelationButton(),
+                ->rules('required_if:external_location,null')
+                ->hideFromIndex(),
 
-            BelongsToMany::make('Plans', 'plans', Plan::class)
-                ->hideFromIndex()
-                ->showCreateRelationButton(),
+            Text::make('External location', 'external_location')
+                ->rules('required_if:location_id,null')
+                ->hideFromIndex(),
 
+            Heading::make('Settings'),
+
+            Number::make('Amount of persons', 'amount_of_persons')
+                ->rules('required', 'integer', 'min:1')
+                ->min(1)
+                ->step(1)
+                ->hideFromIndex()
+                ->displayUsing(function ($value) {
+                    return $this->clients()->count() . '/' . $value;
+                }),
+
+            Number::make('Amount of sessions', 'amount_of_sessions')
+                ->rules('required', 'integer', 'min:1')
+                ->min(1)
+                ->step(1)
+                ->hideFromIndex(),
+
+            BelongsToMany::make('Clients', 'clients', Client::class)
+                ->hideFromIndex(),
+
+            ...$this->priceFields(),
             ...$this->timestampFields(),
         ];
     }

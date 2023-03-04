@@ -437,3 +437,7 @@
     --tw-text-opacity: 1;
     color: rgb(136 19 55 / var(--tw-text-opacity));
 }
+
+.modal > div {
+    @apply !max-w-7xl;
+}

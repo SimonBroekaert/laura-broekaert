@@ -13,7 +13,7 @@ trait CalculatesPrices
      */
     public function calculateDiscount(): self
     {
-        $this->discount_amount = $this->base_price * $this->discount_percentage / 100;
+        $this->discount_amount = $this->price * $this->discount_percentage / 100;
 
         return $this;
     }
@@ -50,7 +50,7 @@ trait CalculatesPrices
     protected function priceWithDiscount(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->base_price - $this->discount_amount,
+            get: fn () => $this->price - $this->discount_amount,
         );
     }
 }

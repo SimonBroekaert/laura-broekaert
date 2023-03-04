@@ -9,6 +9,7 @@ use App\Models\ClientBusiness;
 use App\Models\ContactFormEntry;
 use App\Models\Menu;
 use App\Models\Page;
+use App\Models\Plan;
 use App\Models\PredefinedPlan;
 use App\Models\User;
 use App\Nova\Flexible\Presets\DefaultPreset;
@@ -76,6 +77,7 @@ class DatabaseSeeder extends Seeder
 
         // Create Clients
         $clients = Client::factory()
+            ->hasPlans(1)
             ->count((10))
             ->create();
 
@@ -89,6 +91,20 @@ class DatabaseSeeder extends Seeder
         $clients->shuffle()->take(count($clients) / 3 * 2)->each(function (Client $client) use ($predefinedPlans) {
             $client->predefined_plan_id = $predefinedPlans->random()->id;
             $client->save();
+        });
+
+        // Add clients to plans with more than 1 client
+        Plan::get()->each(function (Plan $plan) {
+            $planClientCount = $plan->clients()->count();
+            $planMaxClients = $plan->amount_of_persons;
+
+            $clientsToAdd = max(0, $planMaxClients - $planClientCount);
+
+            if ($clientsToAdd === 0) {
+                return;
+            }
+
+            $plan->clients()->saveMany(Client::factory()->count($clientsToAdd)->create());
         });
     }
 }

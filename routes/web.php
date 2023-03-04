@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\PredefinedPageController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PredefinedPageController;
 use App\Http\Controllers\PreviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('preview/mail/contact-client', [PreviewController::class, 'contactClientMail']);
-Route::get('preview/mail/contact-admin', [PreviewController::class, 'contactAdminMail']);
+Route::middleware("auth")
+    ->group(function () {
+        Route::get('preview/mail/contact-client', [PreviewController::class, 'contactClientMail']);
+        Route::get('preview/mail/contact-admin', [PreviewController::class, 'contactAdminMail']);
+        Route::get('preview/mail/interested-client', [PreviewController::class, 'interestedClientMail']);
+        Route::get('preview/mail/interested-admin', [PreviewController::class, 'interestedAdminMail']);
+    });
 
 Route::get('contact', [PredefinedPageController::class, 'contact'])
     ->name('contact');
 
-Route::get('cookie', [PredefinedPageController::class, 'cookie'])
+Route::get('cookies', [PredefinedPageController::class, 'cookie'])
     ->name('cookie');
+
+Route::get('interesse', [PredefinedPageController::class, 'interested'])
+    ->name('interested');
 
 Route::get('privacy', [PredefinedPageController::class, 'privacy'])
     ->name('privacy');

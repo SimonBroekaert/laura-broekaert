@@ -26,7 +26,15 @@
 		</div>
 		<div class="justify-center row mt-50">
 			<div class="col-12 md:col-10 xl:col-8">
-				<livewire:contact-form />
+				@switch($block->form)
+					@case(\App\Enums\PredefinedForm::FORM_CONTACT->value)
+						<livewire:contact-form />
+					@break
+
+					@case(\App\Enums\PredefinedForm::FORM_INTERESTED->value)
+						<livewire:interested-form />
+					@break
+				@endswitch
 			</div>
 		</div>
 	</div>

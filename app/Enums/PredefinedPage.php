@@ -12,16 +12,18 @@ enum PredefinedPage: string
 
     case PAGE_HOME = 'home';
     case PAGE_CONTACT = 'contact';
-    case PAGE_PRIVACY = 'privacy';
     case PAGE_COOKIE = 'cookie';
+    case PAGE_INTERESTED = 'interested';
+    case PAGE_PRIVACY = 'privacy';
 
     public function label(): string
     {
         return match ($this) {
             self::PAGE_HOME => 'Home',
             self::PAGE_CONTACT => 'Contact',
-            self::PAGE_PRIVACY => 'Privacy',
             self::PAGE_COOKIE => 'Cookie',
+            self::PAGE_INTERESTED => 'Interested',
+            self::PAGE_PRIVACY => 'Privacy',
         };
     }
 }

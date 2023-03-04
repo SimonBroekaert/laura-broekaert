@@ -51,6 +51,18 @@ class Client extends Model
     ];
 
     /**
+     * Attribute: full_name.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => "{$this->first_name} {$this->last_name}",
+        );
+    }
+
+    /**
      * Attribute: has_business
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute

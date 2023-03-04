@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\ContactFormEntry;
+use App\Models\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactAdminMail extends Mailable
+class InterestedClientMail extends Mailable
 {
     use Queueable;
     use SerializesModels;
@@ -20,7 +20,7 @@ class ContactAdminMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public ContactFormEntry $entry)
+    public function __construct(public Client $client)
     {
         //
     }
@@ -37,8 +37,8 @@ class ContactAdminMail extends Mailable
         return new Envelope(
             to: [
                 new Address(
-                    address: $from,
-                    name: config('mail.from.name'),
+                    address: $this->client->email,
+                    name: $this->client->full_name,
                 ),
             ],
             from: new Address(
@@ -47,11 +47,11 @@ class ContactAdminMail extends Mailable
             ),
             replyTo: [
                 new Address(
-                    address: $this->entry->email,
-                    name: $this->entry->full_name,
+                    address: $from,
+                    name: config('mail.from.name'),
                 ),
             ],
-            subject: 'Nieuw bericht via Contact formulier - ' . $this->entry->subject,
+            subject: 'Bedankt voor uw interesse',
         );
     }
 
@@ -63,10 +63,7 @@ class ContactAdminMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.contact.admin',
-            with: [
-                'url' => config('app.url') . '/admin/resources/contact-form-entries/' . $this->entry->id,
-            ]
+            markdown: 'emails.interested.client',
         );
     }
 

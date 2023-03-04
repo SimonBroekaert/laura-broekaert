@@ -1,10 +1,5 @@
 # TODO's
 
-- [ ] Create Interest Form
-  - [ ] Create Livewire Component
-  - [ ] Save entries as Clients (with status "interested")
-  - [ ] Send email to admin
-  - [ ] Send email to user
 - [ ] Create Plan
   - [ ] Create Model
   - [ ] Create Migration
@@ -40,5 +35,13 @@
   - [ ] Link to Client as morphTo
   - [ ] Link to Plan as morphTo
   - [ ] Link to ClientStat as morphTo
+- [ ] Create Observers
+  - [ ] Update Plan status to active when one or more sessions are active or not booked yet
+    - [ ] But not when status was cancelled, finished, quit, or expired
+  - [ ] Update Plan status to finished when all sessions are finished
+    - [ ] But not when status was cancelled or expired
+- [ ] Send mail when planned session is created
+- [ ] Send mail when planned session is declined
+- [ ] Create page where client can decline planned session (temporary signed url of a couple of days + don't index route)
 - [ ] Reply to action
 - [ ] Test everything

@@ -34,15 +34,6 @@ class PredefinedPageController extends Controller
         ]);
     }
 
-    public function interested()
-    {
-        $page = Page::where('developer_id', PredefinedPage::PAGE_INTERESTED)->firstOrFail();
-
-        return view('static.interested', [
-            'page' => $page,
-        ]);
-    }
-
     public function privacy()
     {
         $page = Page::where('developer_id', PredefinedPage::PAGE_PRIVACY)->firstOrFail();

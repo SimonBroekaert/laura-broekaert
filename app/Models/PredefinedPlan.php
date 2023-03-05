@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\FlexibleCast;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
@@ -73,5 +74,19 @@ class PredefinedPlan extends Model implements Sortable
     public function scopeOnline($query): Builder
     {
         return $query->where('is_online', true);
+    }
+
+    /**
+     * Attribute: contact_url.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function contactUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => route('contact', [
+                'subject' => "Intereesse in {$this->name}",
+            ]),
+        );
     }
 }

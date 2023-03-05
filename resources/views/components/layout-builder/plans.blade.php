@@ -24,7 +24,7 @@
 						@endphp
 						@foreach ($predefinedPlans as $predefinedPlan)
 							<li class="{{ $liClasses }}" data-scroll-list-item>
-								<a href="#"
+								<a href="{{ $predefinedPlan->contact_url }}"
 									class="block h-full p-20 transition-all bg-white border rounded shadow border-gray betterhover:hover:shadow-lg">
 									<x-heading :level="3" class="mb-10 text-primary">
 										{{ $predefinedPlan->name }}

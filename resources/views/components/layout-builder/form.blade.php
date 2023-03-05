@@ -30,10 +30,6 @@
 					@case(\App\Enums\PredefinedForm::FORM_CONTACT->value)
 						<livewire:contact-form />
 					@break
-
-					@case(\App\Enums\PredefinedForm::FORM_INTERESTED->value)
-						<livewire:interested-form />
-					@break
 				@endswitch
 			</div>
 		</div>

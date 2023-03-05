@@ -33,6 +33,7 @@ class ContactForm extends Component
         $this->extraFields = new HoneypotData();
         $this->privacyPage = Page::where('developer_id', PredefinedPage::PAGE_PRIVACY)
             ->first();
+        $this->subject = request()->get('subject');
     }
 
     public function submit()

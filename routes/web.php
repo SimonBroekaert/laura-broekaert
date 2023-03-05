@@ -30,9 +30,6 @@ Route::get('contact', [PredefinedPageController::class, 'contact'])
 Route::get('cookies', [PredefinedPageController::class, 'cookie'])
     ->name('cookie');
 
-Route::get('interesse', [PredefinedPageController::class, 'interested'])
-    ->name('interested');
-
 Route::get('privacy', [PredefinedPageController::class, 'privacy'])
     ->name('privacy');
 

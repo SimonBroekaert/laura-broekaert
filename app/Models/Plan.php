@@ -13,12 +13,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Plan extends Model
 {
     use CalculatesPrices;
     use GeneratesCode;
     use HasFactory;
+
+    /**
+     * The model's attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'status' => PlanStatus::STATUS_ACTIVE,
+    ];
 
     /**
      * The attributes that should be cast.
@@ -79,6 +89,16 @@ class Plan extends Model
     }
 
     /**
+     * Relation: sessions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(Session::class);
+    }
+
+    /**
      * Attribute: address.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
@@ -89,6 +109,110 @@ class Plan extends Model
             get: fn () => $this->hasExternalLocation
                 ? $this->external_location
                 : $this->location?->address?->full,
+        );
+    }
+
+    /**
+     * Attribute: unplanned_sessions_count.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function unplannedSessionsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->amount_of_sessions - $this->planned_sessions_count,
+        );
+    }
+
+    /**
+     * Attribute: planned_sessions_count.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function plannedSessionsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->sessions()
+                ->where(
+                    fn (Builder $query) => $query
+                    ->planned()
+                    ->finished('orWhere')
+                )
+                ->count(),
+        );
+    }
+
+    /**
+     * Attribute: finished_sessions_count.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function finishedSessionsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->sessions()
+                ->finished()
+                ->count(),
+        );
+    }
+
+    /**
+     * Attribute: is_active.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isActive(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->status === PlanStatus::STATUS_ACTIVE,
+        );
+    }
+
+    /**
+     * Attribute: is_cancelled.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isCancelled(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->status === PlanStatus::STATUS_CANCELLED,
+        );
+    }
+
+    /**
+     * Attribute: is_expired.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isExpired(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->status === PlanStatus::STATUS_EXPIRED,
+        );
+    }
+
+    /**
+     * Attribute: is_finished.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isFinished(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->status === PlanStatus::STATUS_FINISHED,
+        );
+    }
+
+    /**
+     * Attribute: is_quit.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function isQuit(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->status === PlanStatus::STATUS_QUIT,
         );
     }
 

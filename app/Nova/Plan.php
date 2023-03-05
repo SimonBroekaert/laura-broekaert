@@ -8,6 +8,7 @@ use App\Nova\Traits\HasTimestampFields;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Heading;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -126,6 +127,20 @@ class Plan extends Resource
 
             BelongsToMany::make('Clients', 'clients', Client::class)
                 ->hideFromIndex(),
+
+            HasMany::make('Sessions', 'sessions', Session::class)
+                ->hideFromIndex(),
+
+            Heading::make('Progress'),
+
+            Number::make('Sessions To Plan', 'unplanned_sessions_count')
+                ->onlyOnDetail(),
+
+            Number::make('Planned sessions', 'planned_sessions_count')
+                ->onlyOnDetail(),
+
+            Number::make('Finished sessions', 'finished_sessions_count')
+                ->onlyOnDetail(),
 
             ...$this->priceFields(),
             ...$this->timestampFields(),

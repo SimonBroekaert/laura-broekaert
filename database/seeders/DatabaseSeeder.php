@@ -11,6 +11,7 @@ use App\Models\Menu;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\PredefinedPlan;
+use App\Models\Session;
 use App\Models\User;
 use App\Nova\Flexible\Presets\DefaultPreset;
 use App\Nova\Flexible\Presets\HomePreset;
@@ -105,6 +106,11 @@ class DatabaseSeeder extends Seeder
             }
 
             $plan->clients()->saveMany(Client::factory()->count($clientsToAdd)->create());
+        });
+
+        // Create sessions for each plan (not more than amount_of_sessions)
+        Plan::get()->each(function (Plan $plan) {
+            $plan->sessions()->saveMany(Session::factory()->count(random_int(0, $plan->amount_of_sessions))->make());
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\UpdatePlanStatus;
 use App\Models\Session;
 
 class SessionObserver

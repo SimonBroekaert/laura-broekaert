@@ -41,7 +41,7 @@ class PlanObserver
     public function created(Plan $plan)
     {
         foreach ($plan->clients as $client) {
-            UpdateClientStatus::dispatch($client);
+            UpdateClientStatus::dispatch($client, afterPlanCreate: true);
         }
     }
 
@@ -76,7 +76,7 @@ class PlanObserver
     {
         if ($plan->isDirty('status')) {
             foreach ($plan->clients as $client) {
-                UpdateClientStatus::dispatch($client);
+                UpdateClientStatus::dispatch($client, afterPlanUpdate: true);
             }
         }
     }

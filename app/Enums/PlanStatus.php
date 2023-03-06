@@ -29,7 +29,7 @@ enum PlanStatus: string
         };
     }
 
-    public function ClientStatus(): ClientStatus
+    public function clientStatus(): ClientStatus
     {
         return match ($this) {
             self::STATUS_ACTIVE => ClientStatus::STATUS_ACTIVE,

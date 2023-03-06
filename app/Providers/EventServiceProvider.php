@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Plan;
+use App\Models\Session;
 use App\Observers\PlanObserver;
+use App\Observers\SessionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Plan::observe(PlanObserver::class);
+        Session::observe(SessionObserver::class);
     }
 
     /**

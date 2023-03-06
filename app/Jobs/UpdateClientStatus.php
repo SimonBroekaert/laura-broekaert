@@ -48,7 +48,7 @@ class UpdateClientStatus implements ShouldQueue
                 $planStatus = $this->client->plans()->orderByDesc('updated_at')->first()?->status;
 
                 $this->client->update([
-                    'status' => $planStatus?->ClientStatus() ?? ClientStatus::STATUS_INTERESTED,
+                    'status' => $planStatus?->clientStatus() ?? ClientStatus::STATUS_INTERESTED,
                 ]);
             }
         }

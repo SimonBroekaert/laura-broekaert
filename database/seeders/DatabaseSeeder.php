@@ -9,6 +9,7 @@ use App\Models\ClientBusiness;
 use App\Models\ContactFormEntry;
 use App\Models\Menu;
 use App\Models\Page;
+use App\Models\Payment;
 use App\Models\Plan;
 use App\Models\PredefinedPlan;
 use App\Models\Session;
@@ -111,6 +112,14 @@ class DatabaseSeeder extends Seeder
         // Create sessions for each plan (not more than amount_of_sessions)
         Plan::get()->each(function (Plan $plan) {
             $plan->sessions()->saveMany(Session::factory()->count(random_int(0, $plan->amount_of_sessions))->make());
+        });
+
+        // Create a payment for each plan
+        Plan::get()->each(function (Plan $plan) {
+            Payment::factory()->create([
+                'payable_id' => $plan->id,
+                'payable_type' => Plan::class,
+            ]);
         });
     }
 }

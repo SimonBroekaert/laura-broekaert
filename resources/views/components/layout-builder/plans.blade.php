@@ -57,16 +57,16 @@
 						@endforeach
 					</ul>
 				</div>
-				<div class="col-12 mt-30">
+				<div class="col-12">
 					<div class="items-center justify-between row">
-						<div class="col-12 md:col-auto">
+						<div class="col-12 md:col-auto mt-30">
 							@if ($block->note)
 								<div class="tiptap tiptap-compact">
 									{!! $block->note !!}
 								</div>
 							@endif
 						</div>
-						<div class="col-12 lg:col-auto mt-30 lg:mt-0">
+						<div class="col-12 lg:col-auto mt-30">
 							<div class="flex justify-end gap-20">
 								<x-button theme="secondary" title="Scroll naar links" data-carousel-control="previous"
 									data-scroll-list-control="{{ $block->key() }}" data-direction="left" data-disabled-class="opacity-20">

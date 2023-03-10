@@ -27,3 +27,4 @@
 - [ ] Create page where client can decline planned session (temporary signed url of a couple of days + don't index route)
 - [ ] Reply to action
 - [ ] Test everything
+- [ ] Fix online status

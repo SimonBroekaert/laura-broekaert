@@ -25,13 +25,16 @@ Route::middleware("auth")
     });
 
 Route::get('contact', [PredefinedPageController::class, 'contact'])
-    ->name('contact');
+    ->name('contact')
+    ->where('link-picker', 'true');
 
 Route::get('cookies', [PredefinedPageController::class, 'cookie'])
-    ->name('cookie');
+    ->name('cookie')
+    ->where('link-picker', 'true');
 
 Route::get('privacy', [PredefinedPageController::class, 'privacy'])
-    ->name('privacy');
+    ->name('privacy')
+    ->where('link-picker', 'true');
 
 Route::get('{page}', [PageController::class, 'show'])
     ->name('pages.show')

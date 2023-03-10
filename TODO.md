@@ -1,12 +1,5 @@
 # TODO's
 
-- [ ] Create Payment
-  - [ ] Create Model
-  - [ ] Create Migration
-  - [ ] Create Factory
-  - [ ] Create Nova Resource
-  - [ ] Link to Plan as belongsToThrough
-  - [ ] Link to Client as belongsTo
 - [ ] Create ClientStat
   - [ ] Create Model
   - [ ] Create Migration

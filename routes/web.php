@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PredefinedPageController;
 use App\Http\Controllers\PreviewController;
 use Illuminate\Support\Facades\Route;
@@ -20,8 +21,8 @@ Route::middleware("auth")
     ->group(function () {
         Route::get('preview/mail/contact-client', [PreviewController::class, 'contactClientMail']);
         Route::get('preview/mail/contact-admin', [PreviewController::class, 'contactAdminMail']);
-        Route::get('preview/mail/interested-client', [PreviewController::class, 'interestedClientMail']);
-        Route::get('preview/mail/interested-admin', [PreviewController::class, 'interestedAdminMail']);
+        Route::get('preview/mail/session-planned-client', [PreviewController::class, 'sessionPlannedClientMail']);
+        Route::get('preview/mail/session-declined-admin', [PreviewController::class, 'sessionDeclinedAdminMail']);
     });
 
 Route::get('contact', [PredefinedPageController::class, 'contact'])
@@ -35,6 +36,9 @@ Route::get('cookies', [PredefinedPageController::class, 'cookie'])
 Route::get('privacy', [PredefinedPageController::class, 'privacy'])
     ->name('privacy')
     ->where('link-picker', 'true');
+
+Route::get('plans/{plan}/sessions/{session}/decline/{client}', [PlanController::class, 'declineSession'])
+    ->name('plans.sessions.decline');
 
 Route::get('{page}', [PageController::class, 'show'])
     ->name('pages.show')

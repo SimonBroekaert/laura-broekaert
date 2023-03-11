@@ -14,6 +14,10 @@ return new class extends Migration {
                 ->cascadeOnDelete();
             $table->dateTime('datetime');
             $table->string('status');
+            $table->foreignId('client_that_declined_id')
+                ->nullable()
+                ->constrained('clients')
+                ->nullOnDelete();
             $table->timestamps();
         });
     }

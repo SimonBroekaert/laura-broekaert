@@ -15,9 +15,7 @@
   - [ ] Link to Client as morphTo
   - [ ] Link to Plan as morphTo
   - [ ] Link to ClientStat as morphTo
-- [ ] Send mail when planned session is created
-- [ ] Send mail when planned session is declined
-- [ ] Create page where client can decline planned session (temporary signed url of a couple of days + don't index route)
+- [ ] Create Blog module
 - [ ] Reply to action
 - [ ] Test everything
 - [ ] Fix online status

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactAdminMail;
 use App\Mail\ContactClientMail;
-use App\Mail\InterestedAdminMail;
-use App\Mail\InterestedClientMail;
-use App\Models\Client;
+use App\Mail\SessionDeclinedAdminMail;
+use App\Mail\SessionPlannedClientMail;
 use App\Models\ContactFormEntry;
+use App\Models\Plan;
+use App\Models\Session;
+use Illuminate\Database\Eloquent\Builder;
 
 class PreviewController extends Controller
 {
@@ -27,21 +29,39 @@ class PreviewController extends Controller
         return new ContactClientMail($entry);
     }
 
-    public function interestedAdminMail()
+    public function sessionPlannedClientMail()
     {
-        $client = Client::inRandomOrder()->first() ?? Client::factory()
-            ->hasBusiness()
-            ->make();
+        $session = Session::whereHas('plan', fn (Builder $query) => $query->has('clients'))
+            ->inRandomOrder()
+            ->first();
 
-        return new InterestedAdminMail($client);
+        if (! $session) {
+            $plan = Plan::factory()
+                ->hasClients(1)
+                ->hasSessions(1)
+                ->create();
+
+            $session = $plan->sessions->first();
+        }
+
+        return new SessionPlannedClientMail($session, $session->plan->clients()->first());
     }
 
-    public function interestedClientMail()
+    public function sessionDeclinedAdminMail()
     {
-        $client = Client::inRandomOrder()->first() ?? Client::factory()
-            ->hasBusiness()
-            ->make();
+        $session = Session::whereHas('plan', fn (Builder $query) => $query->has('clients'))
+            ->inRandomOrder()
+            ->first();
 
-        return new InterestedClientMail($client);
+        if (! $session) {
+            $plan = Plan::factory()
+                ->hasClients(1)
+                ->hasSessions(1)
+                ->create();
+
+            $session = $plan->sessions->first();
+        }
+
+        return new SessionDeclinedAdminMail($session, $session->plan->clients()->first());
     }
 }

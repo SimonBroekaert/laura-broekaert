@@ -2,8 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Mail\InterestedAdminMail;
+use App\Mail\SessionDeclinedAdminMail;
 use App\Models\Client;
+use App\Models\Session;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendInterestedAdminMail implements ShouldQueue
+class SendSessionsDeclinedAdminMail implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -19,11 +20,11 @@ class SendInterestedAdminMail implements ShouldQueue
     use SerializesModels;
 
     /**
-     * Create a new message instance.
+     * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(public Client $client)
+    public function __construct(public Session $session, public Client $client)
     {
         //
     }
@@ -35,6 +36,6 @@ class SendInterestedAdminMail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::send(new InterestedAdminMail($this->client));
+        Mail::send(new SessionDeclinedAdminMail($this->session, $this->client));
     }
 }

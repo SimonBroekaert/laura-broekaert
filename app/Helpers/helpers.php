@@ -1,10 +1,36 @@
 <?php
 
+use Carbon\Carbon;
 
-if (! function_exists('novaBadgeColor')) {
-    function novaBadgeColor(string $color): string
+if (! function_exists('formatDateTime')) {
+    function formatDateTime(Carbon $datetime, $dateFormat = 'dddd, LL', $timeFormat = 'HH\umm', $glue = 'om'): string
     {
-        return "bg-{$color}-100 text-{$color}-600 dark:bg-{$color}-500 dark:text-{$color}-900";
+        $data = formatDate($datetime, $dateFormat);
+        $time = $datetime->isoFormat($timeFormat);
+
+        return "{$data} {$glue} {$time}";
+    }
+}
+
+if (! function_exists('formatDate')) {
+    function formatDate(Carbon $datetime, $dateFormat = 'dddd, LL'): string
+    {
+        return $datetime->isoFormat($dateFormat);
+    }
+}
+
+if (! function_exists('generateCode')) {
+    function generateCode(): string
+    {
+        $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        $charactersLength = strlen($characters);
+        $code = '';
+
+        for ($i = 0; $i < 6; $i++) {
+            $code .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $code;
     }
 }
 
@@ -36,10 +62,10 @@ if (! function_exists('isEven')) {
     }
 }
 
-if (! function_exists('settings')) {
-    function settings(array $keys, $defaults = [])
+if (! function_exists('novaBadgeColor')) {
+    function novaBadgeColor(string $color): string
     {
-        return nova_get_settings($keys, $defaults);
+        return "bg-{$color}-100 text-{$color}-600 dark:bg-{$color}-500 dark:text-{$color}-900";
     }
 }
 
@@ -50,17 +76,9 @@ if (! function_exists('setting')) {
     }
 }
 
-if (! function_exists('generateCode')) {
-    function generateCode(): string
+if (! function_exists('settings')) {
+    function settings(array $keys, $defaults = [])
     {
-        $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-        $charactersLength = strlen($characters);
-        $code = '';
-
-        for ($i = 0; $i < 6; $i++) {
-            $code .= $characters[rand(0, $charactersLength - 1)];
-        }
-
-        return $code;
+        return nova_get_settings($keys, $defaults);
     }
 }

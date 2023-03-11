@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\SessionStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,6 +31,7 @@ class Session extends Model
         'plan_id',
         'datetime',
         'status',
+        'client_that_declined_id',
     ];
 
     /**
@@ -55,13 +55,28 @@ class Session extends Model
     }
 
     /**
-     * Relation: clients.
+     * Relation: clientThatDeclined.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function clients(): Collection
+    public function clientThatDeclined(): BelongsTo
     {
-        return $this->plan()->clients();
+        return $this->belongsTo(Client::class, 'client_that_declined_id');
+    }
+
+    /**
+     * Method: decline.
+     *
+     * @param \App\Models\Client $client
+     *
+     * @return self
+     */
+    public function decline(Client $client): self
+    {
+        $this->status = SessionStatus::STATUS_DECLINED;
+        $this->client_that_declined_id = $client->id;
+
+        return $this;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\ClientStatus;
+use App\Enums\PlanStatus;
 use App\Models\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -45,7 +46,7 @@ class UpdateClientStatus implements ShouldQueue
         if ($this->client->is_active) {
             if ($this->client->plans()->active()->doesntExist()) {
                 /** @var \App\Enums\PlanStatus|null $planStatus */
-                $planStatus = $this->client->plans()->orderByDesc('updated_at')->first()?->status;
+                $planStatus = PlanStatus::tryFrom($this->client->plans()->latest()->first()?->status);
 
                 $this->client->update([
                     'status' => $planStatus?->clientStatus() ?? ClientStatus::STATUS_INTERESTED,

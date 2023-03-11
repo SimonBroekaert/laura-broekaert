@@ -64,24 +64,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
         Field::macro('dateFormat', function () {
             /** @var \Laravel\Nova\Fields\Field $this */
-            return $this->displayUsing(
-                function ($value) {
-                    return $value->isoFormat('dddd, LL');
-                }
-            );
+            return $this->displayUsing(fn ($value) => formatDate($value));
         });
 
         Field::macro('datetimeFormat', function () {
             /** @var \Laravel\Nova\Fields\Field $this */
-            return $this->displayUsing(
-                function ($value) {
-                    $date = $value->isoFormat('dddd, LL');
-                    $time = $value->isoFormat('LT');
-                    $glue = 'at';
-
-                    return "{$date} {$glue} {$time}";
-                }
-            );
+            return $this->displayUsing(fn ($value) => formatDateTime($value));
         });
 
         Field::macro('hideFromRelationshipIndex', function () {

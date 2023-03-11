@@ -49,7 +49,7 @@
 	]) }}>
 	<x-layout.header />
 	<div class="flex flex-col min-h-screen">
-		<main class="flex-grow">
+		<main class="relative flex-grow">
 			{{ $slot }}
 		</main>
 		<x-layout.footer />

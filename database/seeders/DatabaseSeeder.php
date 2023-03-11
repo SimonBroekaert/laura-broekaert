@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Nova\Flexible\Presets\DefaultPreset;
 use App\Nova\Flexible\Presets\HomePreset;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -28,6 +29,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Fake mails
+        Mail::fake();
+
         // Create developer user
         $simon = User::factory()
             ->developer()

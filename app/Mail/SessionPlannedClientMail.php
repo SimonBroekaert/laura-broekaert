@@ -3,14 +3,16 @@
 namespace App\Mail;
 
 use App\Models\Client;
+use App\Models\Session;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
-class InterestedClientMail extends Mailable
+class SessionPlannedClientMail extends Mailable
 {
     use Queueable;
     use SerializesModels;
@@ -20,7 +22,7 @@ class InterestedClientMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public Client $client)
+    public function __construct(public Session $session, public Client $client)
     {
         //
     }
@@ -51,7 +53,7 @@ class InterestedClientMail extends Mailable
                     name: config('mail.from.name'),
                 ),
             ],
-            subject: 'Bedankt voor uw interesse',
+            subject: 'Laura heeft een nieuwe sessie ingepland',
         );
     }
 
@@ -62,8 +64,21 @@ class InterestedClientMail extends Mailable
      */
     public function content()
     {
+        $url = URL::temporarySignedRoute(
+            'plans.sessions.decline',
+            $this->session->datetime->subHours(48),
+            [
+                'plan' => $this->session->plan,
+                'client' => $this->client,
+                'session' => $this->session,
+            ]
+        );
+
         return new Content(
-            markdown: 'emails.interested.client',
+            markdown: 'emails.session.planned_client',
+            with: [
+                'url' => $url,
+            ],
         );
     }
 

@@ -3,7 +3,6 @@
 namespace App\Nova;
 
 use App\Enums\SessionStatus;
-use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -73,6 +72,11 @@ class Session extends Resource
                 ->types(SessionStatus::badges())
                 ->sortable()
                 ->exceptOnForms(),
+
+            BelongsTo::make('Client that declined', 'clientThatDeclined', Client::class)
+                ->nullable()
+                ->onlyOnDetail()
+                ->showOnDetail(fn () => $this->status === SessionStatus::STATUS_DECLINED),
 
             DateTime::make('Date & Time', 'datetime')
                 ->rules('required')

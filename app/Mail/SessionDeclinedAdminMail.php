@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Client;
+use App\Models\Session;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
@@ -10,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InterestedAdminMail extends Mailable
+class SessionDeclinedAdminMail extends Mailable
 {
     use Queueable;
     use SerializesModels;
@@ -20,7 +21,7 @@ class InterestedAdminMail extends Mailable
      *
      * @return void
      */
-    public function __construct(public Client $client)
+    public function __construct(public Session $session, public Client $client)
     {
         //
     }
@@ -45,13 +46,13 @@ class InterestedAdminMail extends Mailable
                 address: $from,
                 name: config('mail.from.name'),
             ),
-            replyTo: [
-                new Address(
-                    address: $this->client->email,
-                    name: $this->client->full_name,
-                ),
-            ],
-            subject: 'Nieuwe persoon met interesse: ' . $this->client->full_name,
+            replyTo: $this->session->plan->clients
+                ->map(fn (Client $client) => new Address(
+                    address: $client->email,
+                    name: $client->full_name,
+                ))
+                ->toArray(),
+            subject: 'Sessie op ' . formatDateTime($this->session->datetime) . ' werd geannuleerd',
         );
     }
 
@@ -63,9 +64,9 @@ class InterestedAdminMail extends Mailable
     public function content()
     {
         return new Content(
-            markdown: 'emails.interested.admin',
+            markdown: 'emails.session.declined_admin',
             with: [
-                'url' => config('app.url') . '/admin/resources/clients/' . $this->client->id,
+                'url' => config('app.url') . '/admin/resources/sessions/' . $this->session->id,
             ]
         );
     }

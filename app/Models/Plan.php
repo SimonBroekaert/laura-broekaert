@@ -7,6 +7,7 @@ use App\Casts\PercentageCast;
 use App\Enums\PlanStatus;
 use App\Models\Traits\CalculatesPrices;
 use App\Models\Traits\GeneratesCode;
+use App\Models\Traits\HasComments;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,7 @@ class Plan extends Model
     use CalculatesPrices;
     use GeneratesCode;
     use HasFactory;
+    use HasComments;
 
     /**
      * The model's attributes.

@@ -146,6 +146,8 @@ class Plan extends Resource
             Number::make('Finished sessions', 'finished_sessions_count')
                 ->onlyOnDetail(),
 
+            MorphMany::make('Comments', 'comments', Comment::class),
+
             ...$this->priceFields(),
             ...$this->timestampFields(),
         ];

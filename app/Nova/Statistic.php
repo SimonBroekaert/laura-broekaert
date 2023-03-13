@@ -2,42 +2,39 @@
 
 namespace App\Nova;
 
-use App\Enums\ClientStatus;
+use App\Enums\StatisticType;
 use App\Nova\Traits\HasTimestampFields;
-use Laravel\Nova\Fields\Badge;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Client extends Resource
+class Statistic extends Resource
 {
     use HasTimestampFields;
 
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Client>
+     * @var class-string<\App\Models\Statistic>
      */
-    public static $model = \App\Models\Client::class;
+    public static $model = \App\Models\Statistic::class;
 
     /**
-     * The logical group associated with the resource.
+     * Indicates if the resource should be displayed in the sidebar.
      *
-     * @var string
+     * @var bool
      */
-    public static $group = 'Clients';
+    public static $displayInNavigation = false;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'full_name';
+    public static $title = 'value';
 
     /**
      * The columns that should be searched.
@@ -46,9 +43,8 @@ class Client extends Resource
      */
     public static $search = [
         'id',
-        'full_name',
-        'email',
-        'phone',
+        'type',
+        'value',
     ];
 
     /**
@@ -63,52 +59,31 @@ class Client extends Resource
             ID::make()
                 ->onlyOnDetail(),
 
-            Select::make('Status', 'status')
-                ->rules('required')
-                ->options(ClientStatus::labels())
-                ->displayUsingLabels()
-                ->default(ClientStatus::STATUS_ACTIVE)
-                ->onlyOnForms()
+            BelongsTo::make('Client', 'client', Client::class)
+                ->sortable()
                 ->filterable(),
 
-            Badge::make('Status', 'status')
-                ->labels(ClientStatus::labels())
-                ->types(ClientStatus::badges())
+            Select::make(__('Type'), 'type')
+                ->options(StatisticType::labels())
+                ->displayUsingLabels()
+                ->rules('required')
                 ->sortable()
-                ->exceptOnForms(),
+                ->filterable(),
 
-            Text::make('First Name', 'first_name')
-                ->rules('required', 'max:255')
-                ->hideFromIndex(),
+            Text::make('Value', 'value')
+                ->displayUsing(function ($value) {
+                    $unit = match ($this->type) {
+                        StatisticType::TYPE_WEIGHT => 'kg',
+                        StatisticType::TYPE_HEIGHT => 'm',
+                        default => null,
+                    };
 
-            Text::make('Last Name', 'last_name')
-                ->rules('required', 'max:255')
-                ->hideFromIndex(),
+                    if ($unit) {
+                        return "{$value}{$unit}";
+                    }
 
-            Text::make('Full Name', 'full_name')
-                ->readonly()
-                ->onlyOnIndex()
-                ->sortable(),
-
-            Text::make('Email', 'email')
-                ->rules('required', 'email', 'max:255', 'unique:clients,email,{{resourceId}}')
-                ->sortable(),
-
-            Text::make('Phone', 'phone')
-                ->rules('nullable', 'max:255', 'unique:clients,phone,{{resourceId}}')
-                ->sortable(),
-
-            BelongsTo::make('Business', 'business', ClientBusiness::class)
-                ->nullable()
-                ->hideFromIndex()
-                ->filterable()
-                ->showCreateRelationButton(),
-
-            BelongsToMany::make('Plans', 'plans', Plan::class)
-                ->hideFromIndex()
-                ->showCreateRelationButton(),
-
-            HasMany::make('Statistics', 'statistics', Statistic::class),
+                    return $value;
+                }),
 
             MorphMany::make('Comments', 'comments', Comment::class),
 

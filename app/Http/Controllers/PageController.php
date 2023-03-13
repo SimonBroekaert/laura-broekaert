@@ -8,6 +8,10 @@ class PageController extends Controller
 {
     public function show(Page $page)
     {
+        if (! $page->is_online) {
+            abort(404);
+        }
+
         return view('pages.show', [
             'page' => $page,
         ]);

@@ -31,7 +31,8 @@ class ContactForm extends Component
     public function mount()
     {
         $this->extraFields = new HoneypotData();
-        $this->privacyPage = Page::where('developer_id', PredefinedPage::PAGE_PRIVACY)
+        $this->privacyPage = Page::online()
+            ->where('developer_id', PredefinedPage::PAGE_PRIVACY)
             ->first();
         $this->subject = request()->get('subject');
     }

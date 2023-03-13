@@ -17,7 +17,9 @@ class Header extends Component
     public function __construct(
         public ?Page $contactPage = null,
     ) {
-        $this->contactPage = Page::where('developer_id', PredefinedPage::PAGE_CONTACT)->first();
+        $this->contactPage = Page::online()
+            ->where('developer_id', PredefinedPage::PAGE_CONTACT)
+            ->first();
     }
 
     /**

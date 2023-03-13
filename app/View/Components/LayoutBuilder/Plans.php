@@ -23,7 +23,8 @@ class Plans extends Component
      */
     public function render()
     {
-        $predefinedPlans = PredefinedPlan::whereIn('id', $this->block->predefinedPlans ?? [])
+        $predefinedPlans = PredefinedPlan::online()
+            ->whereIn('id', $this->block->predefinedPlans ?? [])
             ->ordered()
             ->get();
 

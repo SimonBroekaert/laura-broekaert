@@ -18,4 +18,3 @@
 - [ ] Create Blog module
 - [ ] Reply to action
 - [ ] Test everything
-- [ ] Fix online status

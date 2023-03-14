@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware("auth")
+Route::middleware('auth')
     ->group(function () {
         Route::get('preview/mail/contact-client', [PreviewController::class, 'contactClientMail']);
         Route::get('preview/mail/contact-admin', [PreviewController::class, 'contactAdminMail']);

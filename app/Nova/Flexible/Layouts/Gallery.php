@@ -59,6 +59,14 @@ class Gallery extends Layout implements HasMedia
         ];
     }
 
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            self::MEDIA_COLLECTION => [],
+        ];
+    }
+
     /**
      * Attribute: images
      *
@@ -69,13 +77,5 @@ class Gallery extends Layout implements HasMedia
         return Attribute::make(
             get: fn () => $this->getMedia(self::MEDIA_COLLECTION),
         );
-    }
-
-    public static function fakeDefinition(): array
-    {
-        return [
-            'title' => fake()->sentence(),
-            self::MEDIA_COLLECTION => [],
-        ];
     }
 }

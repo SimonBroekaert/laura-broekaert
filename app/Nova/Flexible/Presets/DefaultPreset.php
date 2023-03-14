@@ -2,7 +2,6 @@
 
 namespace App\Nova\Flexible\Presets;
 
-use App\Nova\Flexible\Layouts\Traits\Fakable;
 use App\Nova\Flexible\Layouts\Article;
 use App\Nova\Flexible\Layouts\ArticleWithMedia;
 use App\Nova\Flexible\Layouts\Form;

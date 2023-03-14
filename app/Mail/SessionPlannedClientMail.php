@@ -24,7 +24,6 @@ class SessionPlannedClientMail extends Mailable
      */
     public function __construct(public Session $session, public Client $client)
     {
-        //
     }
 
     /**

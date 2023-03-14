@@ -112,6 +112,56 @@ class Plan extends Model
     }
 
     /**
+     * Scope: active.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('status', PlanStatus::STATUS_ACTIVE);
+    }
+
+    /**
+     * Scope: cancelled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeCancelled(Builder $query): void
+    {
+        $query->where('status', PlanStatus::STATUS_CANCELLED);
+    }
+
+    /**
+     * Scope: expired.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeExpired(Builder $query): void
+    {
+        $query->where('status', PlanStatus::STATUS_EXPIRED);
+    }
+
+    /**
+     * Scope: finished.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeFinished(Builder $query): void
+    {
+        $query->where('status', PlanStatus::STATUS_FINISHED);
+    }
+
+    /**
+     * Scope: quit.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeQuit(Builder $query): void
+    {
+        $query->where('status', PlanStatus::STATUS_QUIT);
+    }
+
+    /**
      * Attribute: address.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
@@ -148,8 +198,8 @@ class Plan extends Model
             get: fn () => $this->sessions()
                 ->where(
                     fn (Builder $query) => $query
-                    ->planned()
-                    ->finished('orWhere')
+                        ->planned()
+                        ->finished('orWhere')
                 )
                 ->count(),
         );
@@ -264,55 +314,5 @@ class Plan extends Model
                 return $name;
             },
         );
-    }
-
-    /**
-     * Scope: active.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeActive(Builder $query): void
-    {
-        $query->where('status', PlanStatus::STATUS_ACTIVE);
-    }
-
-    /**
-     * Scope: cancelled.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeCancelled(Builder $query): void
-    {
-        $query->where('status', PlanStatus::STATUS_CANCELLED);
-    }
-
-    /**
-     * Scope: expired.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeExpired(Builder $query): void
-    {
-        $query->where('status', PlanStatus::STATUS_EXPIRED);
-    }
-
-    /**
-     * Scope: finished.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeFinished(Builder $query): void
-    {
-        $query->where('status', PlanStatus::STATUS_FINISHED);
-    }
-
-    /**
-     * Scope: quit.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeQuit(Builder $query): void
-    {
-        $query->where('status', PlanStatus::STATUS_QUIT);
     }
 }

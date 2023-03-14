@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait Fakable
 {
-    public abstract static function fakeDefinition(): array;
+    abstract public static function fakeDefinition(): array;
 
     public static function fake(int $count = 1, $asJsonString = true): self|array|string
     {

@@ -26,11 +26,11 @@
         "spatie/laravel-honeypot": "^4.3",
         "spatie/laravel-medialibrary": "^10.7",
         "spatie/laravel-sluggable": "^3.4",
-        "stechstudio/laravel-php-cs-fixer": "^3.0",
         "whitecube/nova-flexible-content": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.15",
         "laravel-lang/attributes": "^2.1",
         "laravel-lang/lang": "^12.13",
         "laravel-lang/publisher": "^14.5",

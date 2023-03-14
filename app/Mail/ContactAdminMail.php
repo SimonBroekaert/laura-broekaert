@@ -22,7 +22,6 @@ class ContactAdminMail extends Mailable
      */
     public function __construct(public ContactFormEntry $entry)
     {
-        //
     }
 
     /**

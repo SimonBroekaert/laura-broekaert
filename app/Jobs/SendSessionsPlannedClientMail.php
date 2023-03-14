@@ -26,7 +26,6 @@ class SendSessionsPlannedClientMail implements ShouldQueue
      */
     public function __construct(public Session $session, public Client $client)
     {
-        //
     }
 
     /**

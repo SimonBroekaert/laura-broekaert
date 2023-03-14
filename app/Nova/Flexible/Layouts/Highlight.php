@@ -94,6 +94,19 @@ class Highlight extends Layout implements HasMedia
         ];
     }
 
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            'body' => fake()->paragraph(),
+            'button_1' => BaseLinkPicker::fake(),
+            'button_1_text' => fake()->word(),
+            'button_2' => BaseLinkPicker::fake(),
+            'button_2_text' => fake()->word(),
+            self::MEDIA_COLLECTION => [],
+        ];
+    }
+
     /**
      * Attribute: first_button
      *
@@ -128,18 +141,5 @@ class Highlight extends Layout implements HasMedia
         return Attribute::make(
             get: fn () => $this->getFirstMedia(self::MEDIA_COLLECTION),
         );
-    }
-
-    public static function fakeDefinition(): array
-    {
-        return [
-            'title' => fake()->sentence(),
-            'body' => fake()->paragraph(),
-            'button_1' => BaseLinkPicker::fake(),
-            'button_1_text' => fake()->word(),
-            'button_2' => BaseLinkPicker::fake(),
-            'button_2_text' => fake()->word(),
-            self::MEDIA_COLLECTION => [],
-        ];
     }
 }

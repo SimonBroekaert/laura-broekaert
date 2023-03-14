@@ -25,7 +25,6 @@ class UpdateClientStatus implements ShouldQueue
      */
     public function __construct(public Client $client, public bool $afterPlanUpdate = false, public bool $afterPlanCreate = false)
     {
-        //
     }
 
     /**

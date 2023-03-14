@@ -62,6 +62,15 @@ class Quote extends Layout implements HasMedia
         ];
     }
 
+    public static function fakeDefinition(): array
+    {
+        return [
+            'quote' => fake()->sentence(),
+            'author' => fake()->name(),
+            self::MEDIA_COLLECTION => [],
+        ];
+    }
+
     /**
      * Attribute: image
      *
@@ -72,14 +81,5 @@ class Quote extends Layout implements HasMedia
         return Attribute::make(
             get: fn () => $this->getFirstMedia(self::MEDIA_COLLECTION),
         );
-    }
-
-    public static function fakeDefinition(): array
-    {
-        return [
-            'quote' => fake()->sentence(),
-            'author' => fake()->name(),
-            self::MEDIA_COLLECTION => [],
-        ];
     }
 }

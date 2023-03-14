@@ -72,6 +72,36 @@ class Payment extends Model
     }
 
     /**
+     * Scope: cancelled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeCancelled(Builder $query): void
+    {
+        $query->where('status', PaymentStatus::STATUS_CANCELLED);
+    }
+
+    /**
+     * Scope: cancelled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopePaid(Builder $query): void
+    {
+        $query->where('status', PaymentStatus::STATUS_PAID);
+    }
+
+    /**
+     * Scope: cancelled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopePending(Builder $query): void
+    {
+        $query->where('status', PaymentStatus::STATUS_PENDING);
+    }
+
+    /**
      * Attribute: is_cancelled.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
@@ -121,35 +151,5 @@ class Payment extends Model
                 return 'Betaling voor: ' . $name;
             },
         );
-    }
-
-    /**
-     * Scope: cancelled.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeCancelled(Builder $query): void
-    {
-        $query->where('status', PaymentStatus::STATUS_CANCELLED);
-    }
-
-    /**
-     * Scope: cancelled.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePaid(Builder $query): void
-    {
-        $query->where('status', PaymentStatus::STATUS_PAID);
-    }
-
-    /**
-     * Scope: cancelled.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePending(Builder $query): void
-    {
-        $query->where('status', PaymentStatus::STATUS_PENDING);
     }
 }

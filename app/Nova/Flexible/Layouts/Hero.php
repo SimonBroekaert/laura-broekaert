@@ -61,6 +61,14 @@ class Hero extends Layout implements HasMedia
         ];
     }
 
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            self::MEDIA_COLLECTION => [],
+        ];
+    }
+
     /**
      * Attribute: image
      *
@@ -71,13 +79,5 @@ class Hero extends Layout implements HasMedia
         return Attribute::make(
             get: fn () => $this->getFirstMedia(self::MEDIA_COLLECTION),
         );
-    }
-
-    public static function fakeDefinition(): array
-    {
-        return [
-            'title' => fake()->sentence(),
-            self::MEDIA_COLLECTION => [],
-        ];
     }
 }

@@ -25,7 +25,6 @@ class SendContactClientMail implements ShouldQueue
      */
     public function __construct(public ContactFormEntry $entry)
     {
-        //
     }
 
     /**

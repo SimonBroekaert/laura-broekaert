@@ -78,6 +78,18 @@ class Article extends Layout
         ];
     }
 
+    public static function fakeDefinition(): array
+    {
+        return [
+            'title' => fake()->sentence(),
+            'body' => fake()->paragraphs(random_int(1, 3), true),
+            'button_1' => BaseLinkPicker::fake(),
+            'button_1_text' => fake()->word(),
+            'button_2' => BaseLinkPicker::fake(),
+            'button_2_text' => fake()->word(),
+        ];
+    }
+
     /**
      * Attribute: first_button
      *
@@ -100,17 +112,5 @@ class Article extends Layout
         return Attribute::make(
             get: fn () => linkPicker()->button($this->button_2, $this->button_2_text),
         );
-    }
-
-    public static function fakeDefinition(): array
-    {
-        return [
-            'title' => fake()->sentence(),
-            'body' => fake()->paragraphs(random_int(1, 3), true),
-            'button_1' => BaseLinkPicker::fake(),
-            'button_1_text' => fake()->word(),
-            'button_2' => BaseLinkPicker::fake(),
-            'button_2_text' => fake()->word(),
-        ];
     }
 }
